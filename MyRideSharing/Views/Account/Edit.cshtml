@@ -1,0 +1,80 @@
+﻿@model MyRideSharing.Models.User
+
+@{
+    ViewBag.Title = "ویرایش کاربر";
+    Layout = "~/Views/shared/_layout.cshtml";
+}
+
+
+<div class="info text-center">
+    <div class="info-title"><strong>ویرایش کاربر</strong></div>
+    <hr>
+</div>
+
+@ViewBag.Error
+@ViewBag.Message
+@using (Html.BeginForm("Edit", "Account", FormMethod.Post, new { @class = "form-horizontal text-center" }))
+{
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+    <br />
+                @Html.LabelFor(model => model.FirstName)
+                <br />
+                @Html.EditorFor(model => model.FirstName)
+                <br />
+                @Html.ValidationMessageFor(model => model.FirstName)
+
+                                <br />
+                                @Html.LabelFor(model => model.LastName)
+                                <br />
+                                @Html.EditorFor(model => model.LastName)
+                                <br />
+                                @Html.ValidationMessageFor(model => model.LastName)
+                                <br />
+                                @Html.LabelFor(model => model.Email)
+                                <br />
+                                @Html.EditorFor(model => model.Email)
+                                <br />
+                                @Html.ValidationMessageFor(model => model.Email)
+                                <br />
+                                @Html.LabelFor(model => model.Phone)
+                                <br />
+                                @Html.EditorFor(model => model.Phone, new { maxlength = "11", onkeyup = "this.value = this.value.replace(/[^0-9]/, '')" })
+                                <br />
+                                @Html.ValidationMessageFor(model => model.Phone)
+                                <br />
+
+                                @Html.LabelFor(model => model.StudentId)
+                                <br />
+                                @Html.EditorFor(model => model.StudentId)
+                                <br />
+                                @Html.ValidationMessageFor(model => model.StudentId)
+                                <br />
+                                @Html.LabelFor(model => model.NationalId)
+                                <br />
+                                @Html.EditorFor(model => model.NationalId)
+                                <br />
+                                @Html.ValidationMessageFor(model => model.NationalId)
+                                <br />
+                               
+                                @Html.LabelFor(model => model.Gender)
+                                <br />
+                                <select name="Gender" id="Gender">
+                                    @foreach (MyRideSharing.Models.Gender g in ViewBag.genders)
+                {
+                                        <option value="@g.Id">@g.Title</option>
+                                    }
+                                </select><br />
+
+            
+                                <br />
+                                <button class="btn btn-default-custom" type="submit" value="Edit">ویرایش</button>
+
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

@@ -1,0 +1,212 @@
+﻿@model MyRideSharing.Models.Ride
+
+@*@model IEnumerable<MyRideSharing.Models.Ride>*@
+@{
+    ViewBag.Title = "صفحه اصلی";
+
+    Layout = "~/Views/shared/_layout.cshtml";
+}
+
+<div class="row">
+    <div class="jumbotron text-center">
+        <h1>Ride Sharing</h1>
+        <p>صرفه جویی در هزینه و زمان</p>
+        
+    </div>
+</div>
+
+
+<hr />
+@using (Html.BeginForm("GoToUni", "Rides", FormMethod.Post, new { @class = "form-vertical text-right" }))
+{
+    @Html.AntiForgeryToken()
+<div class="row">
+    <h4>میخوام برم دانشگاه</h4>
+    <div class="col-lg-3"></div>
+
+    <div class="col-lg-2">
+        <div class="col-lg-10">
+            <button class="btn btn-default-custom" name="submit" type="submit">جستجو</button>
+        </div>
+    </div>
+
+
+
+
+
+    <div class="col-lg-2">
+        <div class="col-lg-10">
+            <span class="fa fa-calendar" aria-hidden="true"></span>
+
+            @Html.LabelFor(model => model.myDate)
+
+            @Html.DisplayFor(model => model.myDate)
+            @Html.EditorFor(model => model.myDate)
+
+            @Html.ValidationMessageFor(model => model.myDate)
+            <br />
+
+        </div>
+
+    </div>
+    
+
+
+    <div class="col-lg-2">
+
+        <div class="col-lg-10">
+            <span class="fa fa-clock-o" aria-hidden="true"></span>
+
+            <label for="Clock">زمان حرکت </label><br />
+            <div class="input-group clockpicker">
+
+            @Html.EditorFor(model => model.myTime, new
+               {
+                   @class = "form-control",
+                   value = "09:30"
+               })
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="col-lg-2">
+        <div class="col-lg-10">
+
+
+            <span class="fa fa-map-marker" aria-hidden="true">
+            </span>
+            <input type="text" name="source" id="source" placeholder="مبدا حرکت" />
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+}
+
+
+
+<hr />
+@using (Html.BeginForm("ReturnFromUni", "Rides", FormMethod.Post, new { @class = "form-vertical text-right" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="row">
+        <h4>میخوام برگردم از دانشگاه</h4>
+        <div class="col-lg-3"></div>
+
+        <div class="col-lg-2">
+            <div class="col-lg-10">
+                <button class="btn btn-default-custom" name="submit" type="submit">جستجو</button>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="col-lg-2">
+            <div class="col-lg-10">
+                <span class="fa fa-calendar" aria-hidden="true"></span>
+
+                @Html.LabelFor(model => model.myDate)
+
+                @Html.DisplayFor(model => model.myDate)
+                @Html.EditorFor(model => model.myDate)
+
+                @Html.ValidationMessageFor(model => model.myDate)
+                <br />
+
+            </div>
+
+        </div>
+
+
+
+        <div class="col-lg-2">
+
+            <div class="col-lg-10">
+                <span class="fa fa-clock-o" aria-hidden="true"></span>
+
+                <label for="Clock">زمان حرکت </label><br />
+                <div class="input-group clockpicker">
+
+                    @Html.EditorFor(model => model.myTime, new
+       {
+           @class = "form-control",
+           value = "09:30"
+       })
+                </div>
+
+            </div>
+        </div>
+
+
+        <div class="col-lg-2">
+            <div class="col-lg-10">
+
+
+                <span class="fa fa-map-marker" aria-hidden="true">
+                </span>
+                <input type="text" name="destination" id="destination" placeholder="مقصد" />
+            </div>
+
+        </div>
+
+
+
+
+
+    </div>
+}
+
+
+
+        <div class="row placeholders center-block">
+            <div class="col-xs-6 col-sm-4 placeholder">
+                <h4>ثبت نام</h4>
+                <br />
+                <img src="~/Content/barber.png" width="200" height="200" class="img-responsive" alt="Barber">
+                <br />
+                @Html.ActionLink("ثبت نام", "SignUp", "Account", new { jobtype = "ثبت نام" }, htmlAttributes: new { @class = "btn btn-default-custom" })
+            </div>
+            <div class="col-xs-6 col-sm-4 placeholder">
+                <h4>ثبت نام</h4>
+                <br />
+                <img src="~/Content/barber.png" width="200" height="200" class="img-responsive" alt="Barber">
+                <br />
+                @Html.ActionLink("ثبت نام", "SignUp", "Account", new { jobtype = "ثبت نام" }, htmlAttributes: new { @class = "btn btn-default-custom" })
+            </div>
+            <div class="col-xs-6 col-sm-4 placeholder">
+                <h4>ثبت نام</h4>
+                <br />
+                <img src="~/Content/barber.png" width="200" height="200" class="img-responsive" alt="Barber">
+                <br />
+                @Html.ActionLink("ثبت نام", "SignUp", "Account", new { jobtype = "ثبت نام" }, htmlAttributes: new { @class = "btn btn-default-custom" })
+            </div>
+        </div>
+
+
+
+
+
+@section styles{
+    <link href="~/Scripts/JsDatePicker/PersianDatePicker.min.css" rel="stylesheet" />
+    <link href="~/Scripts/JsDatePicker/clockpicker.css" rel="stylesheet" />
+
+}
+
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/JsDatePicker/PersianDatePicker.min.js"></script>
+    <script src="~/Scripts/JsDatePicker/clockpicker.js"></script>
+    <script type="text/javascript">
+        $('.clockpicker').clockpicker();
+    </script>
+    }

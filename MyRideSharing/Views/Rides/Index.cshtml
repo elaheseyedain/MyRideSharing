@@ -1,0 +1,88 @@
+﻿@model IEnumerable<MyRideSharing.Models.Ride>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.SourceLatitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SourceLongitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DestinationLatitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DestinationLongitude)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EndTime)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SourcePlace)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.DestinationPlace)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.SourceLatitude)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SourceLongitude)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DestinationLatitude)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DestinationLongitude)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EndTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SourcePlace)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.DestinationPlace)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+
+</table>

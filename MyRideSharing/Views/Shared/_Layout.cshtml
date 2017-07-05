@@ -1,0 +1,83 @@
+﻿<!DOCTYPE html>
+
+<html lang="fa" dir="rtl">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Elaheh Seyedain">
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <meta name="contact" content="info@site.com" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="" />
+    <meta name="twitter:description" content="" />
+    <meta name="twitter:site" content="Appointer" />
+    <meta name="twitter:creator" content="Elaheh_Seyedain" />
+    <meta name="twitter:url" content="http://RideSharing.com/" />
+    <meta name="twitter:image" content="~/Content/img/114x114.png" />
+
+    <meta property="og:title" content="" />
+    <meta property="og:type" content="" />
+    <meta property="og:url" content="http://RideSharing.com/" />
+    <meta property="og:site_name" content="Appointer.com" />
+    <meta property="og:description" content="" />
+    <meta property="og:locale" content="fa_IR" />
+    <meta property="og:locale:alternate" content="en_US" />
+    <meta property="og:image" content="~/Content/img/114x114.png" />
+
+    <link rel="icon" type="image/ico" href="~/favicon.ico">
+    <link rel="icon" type="image/png" href="~/Content/img/114x114.png"><!-- Opera Speed Dial, at least 144×114 px -->
+    <link rel="apple-touch-icon" type="image/png" sizes="57x57" href="~/Content/img/57x57.png"><!-- iPhone -->
+    <link rel="apple-touch-icon" type="image/png" sizes="79x79" href="~/Content/img/79x79.png"><!-- iPad -->
+    <link rel="apple-touch-icon" type="image/png" sizes="114x114" href="~/Content/img/114x114.png"><!-- iPhone4 -->
+
+    <link rel="canonical" href="http://RideSharing.com/" />
+
+    <title>@ViewBag.Title</title>
+    @Styles.Render("~/Content/css")
+    @RenderSection("styles", required: false)
+</head>
+<body>
+    @Html.Partial("~/Views/Shared/_Header.cshtml")
+    <div class="container-fluid">
+        <div id="body" class="row">
+           
+                <div class="col-sm-3 col-md-2 sidebar">
+                    <ul class="nav nav-sidebar">
+                        <li>
+                            <a href="~/Home/Index">
+                                <span class="fa fa-home" aria-hidden="true"></span><br>خانه
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="~/Account/SignUp">
+                                <span class="fa fa-briefcase" aria-hidden="true"></span><br>ثبت نام
+                            </a>
+                        </li>
+
+
+                        <li>
+                            <a href="~/Home/About">
+                                <span class="fa fa-info-circle" aria-hidden="true"></span><br>درباره ما
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            
+            @RenderSection("featured", required: false)
+            <div class="main-countainer col-sm-10 col-md-11">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("scripts", required: false)
+
+</body>
+</html>

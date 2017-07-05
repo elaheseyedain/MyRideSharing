@@ -1,0 +1,32 @@
+﻿@model MyRideSharing.Models.User
+
+@{
+    ViewBag.Title = "ورود";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="info text-center">
+    <div class="info-title"><strong>ورود به سامانه</strong></div>
+    <hr>
+</div>
+@ViewBag.Error
+@ViewBag.Message
+@using (Html.BeginForm("SignIn", "Account", FormMethod.Post, new { @class = "form-horizontal text-center" }))
+{
+
+    <label for="StudentId">شماره دانشجویی: </label><br />
+                @Html.TextBoxFor(m => m.StudentId)
+                @Html.ValidationMessageFor(m => m.StudentId)
+    
+                <br />
+
+                <label for="NationalId"> کد ملی: </label><br />
+                @Html.PasswordFor(m => m.NationalId)
+                @Html.ValidationMessageFor(m => m.NationalId)
+
+                <br />
+                <br />
+                <button class="btn btn-default-custom" type="submit" value="Log in">ورود</button>
+
+
+}

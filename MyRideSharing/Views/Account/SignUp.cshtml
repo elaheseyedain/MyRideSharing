@@ -1,0 +1,87 @@
+﻿@model MyRideSharing.Models.User
+
+@{
+    ViewBag.Title = "ثبت نام";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="info text-center">
+    <div class="info-title"><strong>ثبت نام</strong></div>
+    <hr>
+</div>
+
+@ViewBag.Error
+@ViewBag.Message
+@using (Html.BeginForm("SignUp", "Account", FormMethod.Post, new { @class = "form-horizontal text-center" }))
+{
+                @Html.LabelFor(model => model.FirstName)
+                <br />
+                @Html.TextBoxFor(m => m.FirstName)
+                <br />
+                @Html.ValidationMessageFor(m => m.FirstName)
+                <br />
+
+                @Html.LabelFor(model => model.LastName)
+                <br />
+                @Html.TextBoxFor(m => m.LastName)
+                <br />
+                @Html.ValidationMessageFor(m => m.LastName)
+                <br />
+
+                @Html.LabelFor(model => model.Email)
+                <br />
+                @Html.TextBoxFor(m => m.Email)
+                <br />
+                @Html.ValidationMessageFor(m => m.Email)
+                <br />
+
+                @Html.LabelFor(model => model.Phone)
+                <br />
+                @Html.TextBoxFor(m => m.Phone, new { maxlength = "11", onkeyup = "this.value = this.value.replace(/[^0-9]/, '')" })
+                <br />
+                @Html.ValidationMessageFor(m => m.Phone)
+                <br />
+
+                @Html.LabelFor(model => model.StudentId)
+                <br />
+                @Html.TextBoxFor(m => m.StudentId, new { maxlength = "8", onkeyup = "this.value = this.value.replace(/[^0-9]/, '')" })
+                <br />
+                @Html.ValidationMessageFor(m => m.StudentId)
+                <br />
+
+                @Html.LabelFor(model => model.NationalId)
+                <br />
+                @Html.TextBoxFor(m => m.NationalId, new { maxlength = "10", onkeyup = "this.value = this.value.replace(/[^0-9]/, '')" })
+                <br />
+                @Html.ValidationMessageFor(m => m.NationalId)
+                <br />
+
+                @Html.LabelFor(model => model.Gender)
+                <br />
+                <select name="Gender" id="Gender">
+                    @foreach (MyRideSharing.Models.Gender g in ViewBag.genders)
+                    {
+                        <option value="@g.Id">@g.Title</option>
+                    }
+                </select><br />
+                <br />
+                
+                <br />
+
+
+                <button class="btn btn-default-custom" type="submit" value="Sign Up">ثبت نام</button>
+
+
+}
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
+

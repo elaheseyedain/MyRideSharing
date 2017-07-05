@@ -1,0 +1,70 @@
+﻿@model MyRideSharing.Models.CarOwner
+
+@{
+    ViewBag.Title = "ویرایش ماشین";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="info text-center">
+    <div class="info-title"><strong>ویرایش ماشین</strong></div>
+    <hr>
+</div>
+
+@ViewBag.Error
+@ViewBag.Message
+@using (Html.BeginForm("Edit", "CarOwners", FormMethod.Post, new { @class = "form-horizontal text-center" }))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary()
+    @Html.HiddenFor(model => model.Id)
+
+    @Html.LabelFor(model => model.CarPlate)
+    <br />
+    @Html.EditorFor(model => model.CarPlate)
+    @Html.ValidationMessageFor(model => model.CarPlate)
+    <br />
+
+
+    @Html.LabelFor(model => model.CarName)
+    <br />
+    @Html.EditorFor(model => model.CarName)
+    @Html.ValidationMessageFor(model => model.CarName)
+    <br />
+
+
+    @Html.LabelFor(model => model.CarColor)
+    <br />
+    @Html.EditorFor(model => model.CarColor)
+    @Html.ValidationMessageFor(model => model.CarColor)
+    <br />
+
+    @Html.LabelFor(model => model.CarProdYear)
+    <br />
+    @Html.EditorFor(model => model.CarProdYear)
+    @Html.ValidationMessageFor(model => model.CarProdYear)
+    <br />
+
+    @Html.LabelFor(model => model.LicenseNumber)
+    <br />
+    @Html.EditorFor(model => model.LicenseNumber)
+    @Html.ValidationMessageFor(model => model.LicenseNumber)
+    <br />
+
+    @Html.LabelFor(model => model.Description)
+    <br />
+    @Html.EditorFor(model => model.Description)
+    @Html.ValidationMessageFor(model => model.Description)
+    <br />
+
+
+    <button class="btn btn-default-custom" type="submit" value="Edit">ویرایش</button>
+
+
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

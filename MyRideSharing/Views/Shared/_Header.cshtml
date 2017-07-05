@@ -1,0 +1,33 @@
+﻿<nav class="navbar navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header navbar-inverse navbar-right">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <div id="logo">
+                <a href="~/Home/Index"><img src="~/Content/applogo.png" width="125" height="50" /></a>
+            </div>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                @if (Session["userId"] != null)
+                {
+                    <li><a href="~/Account/SignOut"><span class="fa fa-sign-out" aria-hidden="true">&nbsp;</span>خروج</a></li>
+                    <li><a href="~/Account/Edit"><span class="fa fa-user" aria-hidden="true">&nbsp;</span>@Session["firstName"]&nbsp;@Session["lastName"]</a></li>
+                }
+                else
+                {
+                    <li><a href="~/Account/SignUp"><span class="fa fa-user-plus" aria-hidden="true">&nbsp;</span>ثبت نام</a></li>
+                    <li><a href="~/Account/SignIn"><span class="fa fa-sign-in" aria-hidden="true">&nbsp;</span>ورود</a></li>
+                }
+            </ul>
+            @*<form class="navbar-form navbar-left" action="~/Main/Index" method="post">
+                @Html.AntiForgeryToken()
+                <input type="text" class="form-control" name="title" placeholder="جستجو ...">
+            </form>*@
+        </div>
+    </div>
+</nav>
