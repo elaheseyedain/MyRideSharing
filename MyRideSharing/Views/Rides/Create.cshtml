@@ -1,7 +1,7 @@
 ﻿@model MyRideSharing.Models.Ride
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "ثبت سفر";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,10 +13,10 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>Ride</h4>
+        <h4>ثبت سفر</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
+        @*<div class="form-group">
             @Html.LabelFor(model => model.SourceLatitude, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
                 @Html.EditorFor(model => model.SourceLatitude, new { htmlAttributes = new { @class = "form-control" } })
@@ -46,7 +46,7 @@
                 @Html.EditorFor(model => model.DestinationLongitude, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.DestinationLongitude, "", new { @class = "text-danger" })
             </div>
-        </div>
+        </div>*@
 
         <div class="form-group">
             @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -88,6 +88,8 @@
             </div>
         </div>
 
+
+        <!----here we will add select2 module in order to not save repeated data in our db-->
         <div class="form-group">
             @Html.LabelFor(model => model.DestinationPlace, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -98,15 +100,11 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="ثبت سفر" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
