@@ -53,12 +53,14 @@
           <Property Name="SourceLongitude" Type="decimal" Precision="9" Scale="6" />
           <Property Name="DestinationLatitude" Type="decimal" Precision="9" Scale="6" />
           <Property Name="DestinationLongitude" Type="decimal" Precision="9" Scale="6" />
-          <Property Name="StartTime" Type="datetime" />
-          <Property Name="EndTime" Type="datetime" />
+          <Property Name="StartTime" Type="datetime" Nullable="false" />
+          <Property Name="EndTime" Type="datetime" Nullable="false" />
           <Property Name="Price" Type="int" />
           <Property Name="Description" Type="nvarchar" MaxLength="128" />
           <Property Name="SourcePlace" Type="nvarchar" MaxLength="32" />
           <Property Name="DestinationPlace" Type="nvarchar" MaxLength="32" />
+          <Property Name="EmptySeats" Type="smallint" Nullable="false" />
+          <Property Name="CarOwnerId" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Seats">
           <Key>
@@ -139,6 +141,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Rides_CarOwners">
+          <End Role="CarOwners" Type="Self.CarOwners" Multiplicity="1" />
+          <End Role="Rides" Type="Self.Rides" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarOwners">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Rides">
+              <PropertyRef Name="CarOwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Seats_Rides1">
           <End Role="Rides" Type="Self.Rides" Multiplicity="1" />
           <End Role="Seats" Type="Self.Seats" Multiplicity="*" />
@@ -200,6 +214,10 @@
             <End Role="CarOwners" EntitySet="CarOwners" />
             <End Role="Ratings" EntitySet="Ratings" />
           </AssociationSet>
+          <AssociationSet Name="FK_Rides_CarOwners" Association="Self.FK_Rides_CarOwners">
+            <End Role="CarOwners" EntitySet="CarOwners" />
+            <End Role="Rides" EntitySet="Rides" />
+          </AssociationSet>
           <AssociationSet Name="FK_Seats_Rides1" Association="Self.FK_Seats_Rides1">
             <End Role="Rides" EntitySet="Rides" />
             <End Role="Seats" EntitySet="Seats" />
@@ -232,6 +250,7 @@
           <Property Name="UserId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="User" Relationship="Self.FK_CarOwners_Users" FromRole="CarOwners" ToRole="Users" />
           <NavigationProperty Name="Ratings" Relationship="Self.FK_Ratings_CarOwners" FromRole="CarOwners" ToRole="Ratings" />
+          <NavigationProperty Name="Rides" Relationship="Self.FK_Rides_CarOwners" FromRole="CarOwners" ToRole="Rides" />
         </EntityType>
         <EntityType Name="Gender">
           <Key>
@@ -272,12 +291,15 @@
           <Property Name="SourceLongitude" Type="Decimal" Precision="9" Scale="6" />
           <Property Name="DestinationLatitude" Type="Decimal" Precision="9" Scale="6" />
           <Property Name="DestinationLongitude" Type="Decimal" Precision="9" Scale="6" />
-          <Property Name="StartTime" Type="DateTime" Precision="3" />
-          <Property Name="EndTime" Type="DateTime" Precision="3" />
+          <Property Name="StartTime" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="EndTime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Price" Type="Int32" />
           <Property Name="Description" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="SourcePlace" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
           <Property Name="DestinationPlace" Type="String" MaxLength="32" FixedLength="false" Unicode="true" />
+          <Property Name="EmptySeats" Type="Int16" Nullable="false" />
+          <Property Name="CarOwnerId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CarOwner" Relationship="Self.FK_Rides_CarOwners" FromRole="Rides" ToRole="CarOwners" />
           <NavigationProperty Name="Seats" Relationship="Self.FK_Seats_Rides1" FromRole="Rides" ToRole="Seats" />
         </EntityType>
         <EntityType Name="Seat">
@@ -338,6 +360,18 @@
               <PropertyRef Name="Id" />
             </Principal>
             <Dependent Role="Ratings">
+              <PropertyRef Name="CarOwnerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Rides_CarOwners">
+          <End Role="CarOwners" Type="Self.CarOwner" Multiplicity="1" />
+          <End Role="Rides" Type="Self.Ride" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarOwners">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Rides">
               <PropertyRef Name="CarOwnerId" />
             </Dependent>
           </ReferentialConstraint>
@@ -418,6 +452,10 @@
           <AssociationSet Name="FK_Ratings_CarOwners" Association="Self.FK_Ratings_CarOwners">
             <End Role="CarOwners" EntitySet="CarOwners" />
             <End Role="Ratings" EntitySet="Ratings" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Rides_CarOwners" Association="Self.FK_Rides_CarOwners">
+            <End Role="CarOwners" EntitySet="CarOwners" />
+            <End Role="Rides" EntitySet="Rides" />
           </AssociationSet>
           <AssociationSet Name="FK_Users_Genders" Association="Self.FK_Users_Genders">
             <End Role="Genders" EntitySet="Genders" />
@@ -503,6 +541,8 @@
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="SourcePlace" ColumnName="SourcePlace" />
                 <ScalarProperty Name="DestinationPlace" ColumnName="DestinationPlace" />
+                <ScalarProperty Name="EmptySeats" ColumnName="EmptySeats" />
+                <ScalarProperty Name="CarOwnerId" ColumnName="CarOwnerId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

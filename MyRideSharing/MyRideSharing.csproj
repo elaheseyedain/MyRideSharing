@@ -323,6 +323,7 @@
     <Content Include="Views\CarOwners\Details.cshtml" />
     <Content Include="Views\CarOwners\Edit.cshtml" />
     <Content Include="Views\CarOwners\Index.cshtml" />
+    <Content Include="Views\Rides\MyRides.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

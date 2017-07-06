@@ -4,17 +4,18 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4a117753db474dc4af41e2adb3a86d4c" Name="Diagram1">
-        <EntityTypeShape EntityType="RideSharingModel.CarOwner" Width="1.5" PointX="5.25" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="RideSharingModel.Gender" Width="1.5" PointX="0.75" PointY="4.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="RideSharingModel.Message" Width="1.5" PointX="5.25" PointY="6.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="RideSharingModel.Rating" Width="1.5" PointX="7.5" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="RideSharingModel.Ride" Width="1.5" PointX="6" PointY="10" IsExpanded="true" />
-        <EntityTypeShape EntityType="RideSharingModel.Seat" Width="1.5" PointX="8.25" PointY="6.625" IsExpanded="true" />
+      <Diagram DiagramId="9c40638cce634d3da902f04e09a34617" Name="Diagram1">
+        <EntityTypeShape EntityType="RideSharingModel.CarOwner" Width="1.5" PointX="5.25" PointY="3" IsExpanded="true" />
+        <EntityTypeShape EntityType="RideSharingModel.Gender" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="RideSharingModel.Message" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="RideSharingModel.Rating" Width="1.5" PointX="7.5" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="RideSharingModel.Ride" Width="1.5" PointX="7.5" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="RideSharingModel.Seat" Width="1.5" PointX="9.75" PointY="5" IsExpanded="true" />
         <EntityTypeShape EntityType="RideSharingModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="RideSharingModel.User" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="RideSharingModel.User" Width="1.5" PointX="3" PointY="4.375" IsExpanded="true" />
         <AssociationConnector Association="RideSharingModel.FK_CarOwners_Users" ManuallyRouted="false" />
         <AssociationConnector Association="RideSharingModel.FK_Ratings_CarOwners" ManuallyRouted="false" />
+        <AssociationConnector Association="RideSharingModel.FK_Rides_CarOwners" ManuallyRouted="false" />
         <AssociationConnector Association="RideSharingModel.FK_Users_Genders" ManuallyRouted="false" />
         <AssociationConnector Association="RideSharingModel.FK_Messages_Users" ManuallyRouted="false" />
         <AssociationConnector Association="RideSharingModel.FK_Messages_Users1" ManuallyRouted="false" />

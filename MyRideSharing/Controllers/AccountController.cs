@@ -104,6 +104,20 @@ namespace MyRideSharing.Controllers
             
         }
 
+        public ActionResult SignOut()
+        {
+            SessionPersister.UserId = -1;
+            SessionPersister.Email = null;
+            SessionPersister.FirstName = null;
+            SessionPersister.LastName = null;
+            SessionPersister.NationalId = null;
+            SessionPersister.StudentId = null;
+
+            ViewBag.Message = "You've Signed out successfully";
+
+            return RedirectToAction("SignIn", "Account");
+        }
+
         [HttpGet]
         public ActionResult Edit()
         {

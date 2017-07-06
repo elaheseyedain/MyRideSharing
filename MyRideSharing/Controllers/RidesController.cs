@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using MyRideSharing.Models;
+using MyRideSharing.Security;
 
 namespace MyRideSharing.Controllers
 {
@@ -18,6 +19,42 @@ namespace MyRideSharing.Controllers
         public ActionResult Index()
         {
             return View(db.Rides.ToList());
+        }
+
+        public ActionResult MyRides()
+        {
+            User u = db.Users.Find(SessionPersister.UserId);
+            //User u = new User();
+            //var uid = Int32.Parse(Session["userId"].ToString());
+            if (u == null)
+            {
+                return RedirectToAction("SignIn", "Account");
+            }
+            //var ownsCar = db.CarOwners.Any(p => (p.UserId == uid));
+            var uid = u.Id;
+            CarOwner co = new CarOwner();
+            co = db.CarOwners.Where(l => l.UserId.Equals(uid)).FirstOrDefault();
+            //if (u == null)
+            //{
+            //    return RedirectToAction("SignIn", "Account");
+            //}
+            if (co == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var mr = db.Rides.Where(a => a.CarOwnerId == co.Id).ToList();
+            return View(mr.ToList());
+
+            /*
+            //DateTime dt = DateTime.Now.AddDays(2);
+            //&& a.StartTime >= DateTime.Now  && a.StartTime <= dt
+            //var jobs = db.Jobs.Include(j => j.User).Include(j => j.JobType);
+            var Appointments = db.Appointments.Where(a => a.UserId == user.Id && a.StartTime >= DateTime.Now).ToList();
+            return View(Appointments.ToList());*/
+            //ViewBag.WorkingTimes = db.WorkingTimes.Where(acc => (acc.JobCorpId == s.JobCorpId) && (acc.StartTime > DateTime.Now)).ToList();
+
+            //return View(db.Rides.ToList());
+
         }
 
         [HttpPost]
@@ -74,11 +111,26 @@ namespace MyRideSharing.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Ride ride)
         {
+
+            TimeSpan ts = TimeSpan.Parse(ride.myStartTime);
+            ride.StartTime = ride.myDate.Date + ts;
+            ride.EndTime = ride.StartTime;
+            ride.EndTime = ride.EndTime.AddMinutes(ride.Duration);
+            User u = new User();
+            var uid = Int32.Parse(Session["userId"].ToString());
+            
+            CarOwner co = db.CarOwners.Where(l => l.UserId.Equals(uid)).FirstOrDefault();
+            ride.CarOwnerId = co.Id;
             if (ModelState.IsValid)
             {
                 db.Rides.Add(ride);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                Seat s = new Seat();
+                s.UserId = uid;
+                s.RideId = ride.Id;
+                db.Seats.Add(s);//add the carOwner to the Seats
+                db.SaveChanges();
+                return RedirectToAction("MyRides");
             }
             //////
             return View(ride);

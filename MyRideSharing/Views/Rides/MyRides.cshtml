@@ -1,0 +1,122 @@
+﻿@model IEnumerable<MyRideSharing.Models.Ride>
+
+@{
+    ViewBag.Title = "سفرهای من به عنوان راننده";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<hr />
+<br />
+<h3>سفرهای من به عنوان راننده</h3>
+<br />
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-right">
+                    @Html.DisplayNameFor(model => model.StartTime)
+                </th>
+
+                <th class="text-right">
+                    @Html.DisplayName("روز")
+                </th>
+                <th class="text-right">
+                    @Html.DisplayName("ساعت")
+                </th>
+                <th class="text-right">
+                    @Html.DisplayNameFor(model => model.SourcePlace)
+                </th>
+                <th class="text-right">
+                    @Html.DisplayNameFor(model => model.DestinationPlace)
+                </th>
+                <th class="text-right">
+                    @Html.DisplayNameFor(model => model.Price)
+                </th>
+                <th class="text-right">
+                    @Html.DisplayNameFor(model => model.EmptySeats)
+                </th>
+                <th class="text-right">
+                    @Html.DisplayNameFor(model => model.Duration)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        @functions{
+            public string pdate(DayOfWeek day)
+            {
+                switch (day)
+                {
+                    case DayOfWeek.Sunday:
+                        return "یکشنبه";
+
+
+                    case DayOfWeek.Monday:
+                        return "دوشنبه";
+
+                    case DayOfWeek.Tuesday:
+                        return "سه‌شنبه";
+
+                    case DayOfWeek.Wednesday:
+                        return "چهارشنبه";
+
+                    case DayOfWeek.Thursday:
+                        return "پنج‌شنبه";
+
+                    case DayOfWeek.Friday:
+                        return "جمعه";
+
+                    case DayOfWeek.Saturday:
+                        return "شنبه";
+
+                    default:
+                        return "روز هفته";
+                }
+            }
+        }
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartTime)
+                </td>
+
+                <td>
+                    <span>@pdate(item.StartTime.DayOfWeek)</span>
+                </td>
+                @{string StartHHmm = item.StartTime.ToString("HH:mm");  }
+
+                <td>
+                    @Html.DisplayFor(modelItem => StartHHmm)
+                </td>
+
+
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.SourcePlace)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DestinationPlace)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EmptySeats)
+                </td>
+                <td>
+                    
+
+                        @Html.ActionLink("ویرایش", "Edit", new { id = item.Id })  <span> |</span>
+                        @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) <span> |</span>
+                        @Html.ActionLink("کنسل", "Delete", new { id = item.Id })
+                    
+                </td>
+            </tr>
+                    }
+
+    </table>
+</div>
+
+

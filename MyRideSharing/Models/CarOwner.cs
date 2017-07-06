@@ -19,22 +19,22 @@ namespace MyRideSharing.Models
         public CarOwner()
         {
             this.Ratings = new HashSet<Rating>();
+            this.Rides = new HashSet<Ride>();
         }
     
         public int Id { get; set; }
 
-        
         [Display(Name = "شماره پلاک")]
         [Required(ErrorMessage = "وارد کردن شماره پلاک الزامی است")]
         [StringLength(9, ErrorMessage = "کد ملی باید 10 کاراکتری باشد", MinimumLength = 9)]
         [RegularExpression(@"^[0-9]{2}[آابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی][0-9]{3}\-[0-9]{2}$", ErrorMessage = "پلاک ماشین را با فرمت زیر وارد کنید: 11-123ب22")]
         public string CarPlate { get; set; }
 
+
         [Required(ErrorMessage = "این فیلد باید پر شود")]
         [Display(Name = "مدل ماشین")]
         [StringLength(32)]
         public string CarName { get; set; }
-
 
         [Required(ErrorMessage = "این فیلد باید پر شود")]
         [Display(Name = "رنگ ماشین")]
@@ -48,11 +48,11 @@ namespace MyRideSharing.Models
         public string CarProdYear { get; set; }
 
 
+
         [Display(Name = "شماره گواهینامه")]
         [Required(ErrorMessage = "این فیلد حتما باید پر شود")]
         [StringLength(10, ErrorMessage = "این فیلد 10 کاراکتری است", MinimumLength = 10)]
         public string LicenseNumber { get; set; }
-
 
         [Display(Name = "توضیحات")]
         public string Description { get; set; }
@@ -61,5 +61,7 @@ namespace MyRideSharing.Models
         public virtual User User { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Rating> Ratings { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Ride> Rides { get; set; }
     }
 }
