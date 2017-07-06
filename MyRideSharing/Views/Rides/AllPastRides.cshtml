@@ -1,15 +1,18 @@
 ﻿@model IEnumerable<MyRideSharing.Models.Ride>
 
 @{
-    ViewBag.Title = "سفرهای من به عنوان راننده";
+    ViewBag.Title = "سفرهای قبلی من";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
+
 <hr />
 <br />
-<h3>سفرهای من به عنوان راننده</h3>
+<h3>سفرهای قبلی من </h3>
 <br />
+
+
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>
@@ -34,13 +37,13 @@
                     @Html.DisplayNameFor(model => model.DestinationPlace)
                 </th>
                 <th class="text-right">
+                    @Html.DisplayNameFor(model => model.CarOwner.User.FirstName)
+                </th>
+                <th class="text-right">
                     @Html.DisplayNameFor(model => model.Price)
                 </th>
                 <th class="text-right">
                     @Html.DisplayNameFor(model => model.EmptySeats)
-                </th>
-                <th class="text-right">
-                    @Html.DisplayNameFor(model => model.Duration)
                 </th>
                 <th></th>
             </tr>
@@ -92,6 +95,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => StartHHmm)
                 </td>
+
                 @{
                     string EndHm = item.EndTime.ToString("HH:mm");
                     string StartHm = item.StartTime.ToString("HH:mm");
@@ -114,26 +118,19 @@
                 </td>
 
                 <td>
+                    @Html.DisplayFor(modelItem => item.CarOwner.User.FirstName)<span>&nbsp;</span>@Html.DisplayFor(modelItem => item.CarOwner.User.LastName)
+                </td>
+
+                <td>
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.EmptySeats)
                 </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Duration)
-                </td>
-                <td>
-                    
 
-                        @Html.ActionLink("ویرایش", "Edit", new { id = item.Id })  <span> |</span>
-                        @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) <span> |</span>
-                        @Html.ActionLink("کنسل", "Delete", new { id = item.Id })
-                    
-                </td>
             </tr>
                     }
 
     </table>
 </div>
-
 

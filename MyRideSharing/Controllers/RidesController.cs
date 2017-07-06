@@ -8,6 +8,9 @@ using System.Web;
 using System.Web.Mvc;
 using MyRideSharing.Models;
 using MyRideSharing.Security;
+using MyRideSharing.Utilities;
+using System.Globalization;
+using System.Data.Entity.Core.Objects;
 
 namespace MyRideSharing.Controllers
 {
@@ -16,72 +19,158 @@ namespace MyRideSharing.Controllers
         private RideSharingEntities db = new RideSharingEntities();
 
         // GET: Rides
-        public ActionResult Index()
+        public ActionResult Index()//AllRides
         {
-            return View(db.Rides.ToList());
+            /*IEnumerable<Job> query = db.Jobs.ToList();
+            query = db.Jobs.Where(m => (string.IsNullOrEmpty(title) ? true : m.Title.Contains(title)) && (string.IsNullOrEmpty(city) ? true : m.City.Name == city) && (string.IsNullOrEmpty(jobtype) ? true : m.JobType.Title == jobtype));
+            */
+
+            User u = db.Users.Find(SessionPersister.UserId);
+            if (u == null)
+            {
+                return RedirectToAction("SignIn", "Account");
+            }
+            
+            //var uid = u.Id;
+            var UserRidesQuery =
+                from Seat in db.Seats
+                join Ride in db.Rides on Seat.RideId equals Ride.Id
+                where Seat.UserId == u.Id
+                select Ride;
+            
+            var ur = UserRidesQuery.ToList();
+            return View(ur.ToList());
+            
+
+
+            //return View(db.Rides.ToList());
+        }
+
+        public ActionResult AllFutureRides()
+        {
+            User u = db.Users.Find(SessionPersister.UserId);
+            if (u == null)
+            {
+                return RedirectToAction("SignIn", "Account");
+            }
+            
+            var UserRidesQuery =
+                from Seat in db.Seats
+                join Ride in db.Rides on Seat.RideId equals Ride.Id
+                where Seat.UserId == u.Id && Ride.StartTime >= DateTime.Now
+                select Ride;
+            //ViewBag.WorkingTimes = db.WorkingTimes.Where(acc => (acc.JobCorpId == jc.Id) && (acc.StartTime > DateTime.Now)).OrderBy(p => p.StartTime).ToList();
+
+            var ur = UserRidesQuery.OrderBy(p => p.StartTime).ToList();
+            return View(ur.ToList());
+            
+        }
+
+        public ActionResult AllPastRides()
+        {
+            User u = db.Users.Find(SessionPersister.UserId);
+            if (u == null)
+            {
+                return RedirectToAction("SignIn", "Account");
+            }
+
+            var UserRidesQuery =
+                from Seat in db.Seats
+                join Ride in db.Rides on Seat.RideId equals Ride.Id
+                where Seat.UserId == u.Id && Ride.StartTime <= DateTime.Now
+                select Ride;
+
+            var ur = UserRidesQuery.OrderByDescending(p => p.StartTime).ToList();
+            return View(ur.ToList());
+
         }
 
         public ActionResult MyRides()
         {
             User u = db.Users.Find(SessionPersister.UserId);
-            //User u = new User();
-            //var uid = Int32.Parse(Session["userId"].ToString());
             if (u == null)
             {
                 return RedirectToAction("SignIn", "Account");
             }
-            //var ownsCar = db.CarOwners.Any(p => (p.UserId == uid));
             var uid = u.Id;
             CarOwner co = new CarOwner();
             co = db.CarOwners.Where(l => l.UserId.Equals(uid)).FirstOrDefault();
-            //if (u == null)
-            //{
-            //    return RedirectToAction("SignIn", "Account");
-            //}
+            
             if (co == null)
             {
                 return RedirectToAction("Index", "Home");
             }
-            var mr = db.Rides.Where(a => a.CarOwnerId == co.Id).ToList();
+            var mr = db.Rides.Where(a => a.CarOwnerId == co.Id).OrderBy(p => p.StartTime).ToList();
+            return View(mr.ToList());
+            
+
+        }
+
+        public ActionResult MyFutureRides()
+        {
+            User u = db.Users.Find(SessionPersister.UserId);
+            if (u == null)
+            {
+                return RedirectToAction("SignIn", "Account");
+            }
+            var uid = u.Id;
+            CarOwner co = new CarOwner();
+            co = db.CarOwners.Where(l => l.UserId.Equals(uid)).FirstOrDefault();
+
+            if (co == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var mr = db.Rides.Where(a => (a.CarOwnerId == co.Id) && (a.StartTime >= DateTime.Now)).OrderBy(p => p.StartTime).ToList();
             return View(mr.ToList());
 
-            /*
-            //DateTime dt = DateTime.Now.AddDays(2);
-            //&& a.StartTime >= DateTime.Now  && a.StartTime <= dt
-            //var jobs = db.Jobs.Include(j => j.User).Include(j => j.JobType);
-            var Appointments = db.Appointments.Where(a => a.UserId == user.Id && a.StartTime >= DateTime.Now).ToList();
-            return View(Appointments.ToList());*/
-            //ViewBag.WorkingTimes = db.WorkingTimes.Where(acc => (acc.JobCorpId == s.JobCorpId) && (acc.StartTime > DateTime.Now)).ToList();
 
-            //return View(db.Rides.ToList());
+        }
+
+        public ActionResult MyPastRides()
+        {
+            User u = db.Users.Find(SessionPersister.UserId);
+            if (u == null)
+            {
+                return RedirectToAction("SignIn", "Account");
+            }
+            var uid = u.Id;
+            CarOwner co = new CarOwner();
+            co = db.CarOwners.Where(l => l.UserId.Equals(uid)).FirstOrDefault();
+
+            if (co == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            var mr = db.Rides.Where(a => (a.CarOwnerId == co.Id) && (a.StartTime <= DateTime.Now)).OrderByDescending(p => p.StartTime).ToList();
+            return View(mr.ToList());
+
 
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]//todo
-        public ActionResult GoToUni(DateTime myDate, String myTime, string source)
+        public ActionResult GoToUni(string myDate, string SourcePlace)//(string myDate, string myStartTime, string SourcePlace)
         {
-            Ride r = new Ride();
-            IEnumerable<Ride> query = db.Rides.ToList();
-            TimeSpan ts = TimeSpan.Parse(myTime);
-            r.StartTime = r.myDate.Date + ts;
 
-            query = db.Rides.Where(m => (string.IsNullOrEmpty(source) ? true : m.SourcePlace.Contains(source)) && (m.StartTime.Equals(myDate) && (m.DestinationPlace.Equals("دانشگاه زنجان"))));
-            //if (query == null)
-            //{
-
-            //    ViewBag.cities = db.Cities.ToList();
-            //    ViewBag.jt = db.JobTypes.ToList();
-            //    var jobs = db.Jobs.ToList();
-            //    return View(jobs.ToList());
-            //}
-            //ViewBag.cities = db.Cities.ToList();
-            //ViewBag.jt = db.JobTypes.ToList();
-            //var jb = query.ToList();
-            return View();
-
+            DateTime pDate = Convert.ToDateTime(myDate);
+            DateTime justDate = Utility.ToMiladiDateTime(pDate);
+            var q = db.Rides.Where(a => (a.DestinationPlace.Contains("دانشگاه زنجان")) && (string.IsNullOrEmpty(SourcePlace) ? true : a.SourcePlace.Contains(SourcePlace)) && (a.StartTime >= DateTime.Now) && (string.IsNullOrEmpty(myDate) ? true : DbFunctions.TruncateTime(a.StartTime) == justDate)).OrderBy(a => a.StartTime);
+            
+            return View(q.ToList());
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]//todo
+        public ActionResult ReturnFromUni(string myDate, string DestinationPlace)
+        {
+
+            DateTime pDate = Convert.ToDateTime(myDate);
+            DateTime justDate = Utility.ToMiladiDateTime(pDate);
+            var q = db.Rides.Where(a => (a.SourcePlace.Contains("دانشگاه زنجان")) && (string.IsNullOrEmpty(DestinationPlace) ? true : a.DestinationPlace.Contains(DestinationPlace)) && (a.StartTime >= DateTime.Now) && (string.IsNullOrEmpty(myDate) ? true : DbFunctions.TruncateTime(a.StartTime) == justDate)).OrderBy(a => a.StartTime);
+
+            return View(q.ToList());
+        }
 
         // GET: Rides/Details/5
         public ActionResult Details(int? id)

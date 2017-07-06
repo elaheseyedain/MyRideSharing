@@ -22,10 +22,11 @@
     @Html.AntiForgeryToken()
 <div class="row">
     <h4>میخوام برم دانشگاه</h4>
-    <div class="col-lg-3"></div>
+    <div class="col-lg-4"></div>
 
     <div class="col-lg-2">
         <div class="col-lg-10">
+            <label for="GoUni">&nbsp; </label><br />
             <button class="btn btn-default-custom" name="submit" type="submit">جستجو</button>
         </div>
     </div>
@@ -34,16 +35,14 @@
 
 
 
-    <div class="col-lg-2">
+    <div class="col-lg-3">
         <div class="col-lg-10">
             <span class="fa fa-calendar" aria-hidden="true"></span>
 
             @Html.LabelFor(model => model.myDate)
 
-            @Html.DisplayFor(model => model.myDate)
             @Html.EditorFor(model => model.myDate)
 
-            @Html.ValidationMessageFor(model => model.myDate)
             <br />
 
         </div>
@@ -52,14 +51,16 @@
     
 
 
-    <div class="col-lg-2">
+    @*<div class="col-lg-2">
 
         <div class="col-lg-10">
-            <span class="fa fa-clock-o" aria-hidden="true"></span>
+            
 
-            <label for="Clock">زمان حرکت </label><br />
+            @*<label for="Clock">زمان حرکت </label><br />
             <div class="input-group clockpicker">
 
+                <span class="fa fa-clock-o" aria-hidden="true"></span>
+                @Html.LabelFor(model => model.myStartTime)
             @Html.EditorFor(model => model.myStartTime, new
                {
                    @class = "form-control",
@@ -68,16 +69,18 @@
             </div>
 
         </div>
-    </div>
+    </div>*@
 
 
-    <div class="col-lg-2">
+    <div class="col-lg-3">
         <div class="col-lg-10">
 
 
             <span class="fa fa-map-marker" aria-hidden="true">
             </span>
-            <input type="text" name="source" id="source" placeholder="مبدا حرکت" />
+            @Html.LabelFor(model => model.SourcePlace)
+
+            @Html.EditorFor(model => model.SourcePlace)
         </div>
 
     </div>
@@ -97,10 +100,12 @@
     @Html.AntiForgeryToken()
     <div class="row">
         <h4>میخوام برگردم از دانشگاه</h4>
-        <div class="col-lg-3"></div>
+        <div class="col-lg-4"></div>
+
 
         <div class="col-lg-2">
             <div class="col-lg-10">
+                <label for="GoUni">&nbsp; </label><br />
                 <button class="btn btn-default-custom" name="submit" type="submit">جستجو</button>
             </div>
         </div>
@@ -108,17 +113,14 @@
 
 
 
-
-        <div class="col-lg-2">
+        <!--nullable date. to do-->
+        <div class="col-lg-3">
             <div class="col-lg-10">
                 <span class="fa fa-calendar" aria-hidden="true"></span>
 
                 @Html.LabelFor(model => model.myDate)
 
-                @Html.DisplayFor(model => model.myDate)
                 @Html.EditorFor(model => model.myDate)
-
-                @Html.ValidationMessageFor(model => model.myDate)
                 <br />
 
             </div>
@@ -127,14 +129,16 @@
 
 
 
-        <div class="col-lg-2">
+        @*<div class="col-lg-2">
 
             <div class="col-lg-10">
-                <span class="fa fa-clock-o" aria-hidden="true"></span>
 
-                <label for="Clock">زمان حرکت </label><br />
+
+                @*<label for="Clock">زمان حرکت </label><br />
                 <div class="input-group clockpicker">
 
+                    <span class="fa fa-clock-o" aria-hidden="true"></span>
+                    @Html.LabelFor(model => model.myStartTime)
                     @Html.EditorFor(model => model.myStartTime, new
        {
            @class = "form-control",
@@ -143,16 +147,18 @@
                 </div>
 
             </div>
-        </div>
+        </div>*@
 
 
-        <div class="col-lg-2">
+        <div class="col-lg-3">
             <div class="col-lg-10">
 
 
                 <span class="fa fa-map-marker" aria-hidden="true">
                 </span>
-                <input type="text" name="destination" id="destination" placeholder="مقصد" />
+                @Html.LabelFor(model => model.DestinationPlace)
+
+                @Html.EditorFor(model => model.DestinationPlace)
             </div>
 
         </div>
@@ -163,7 +169,9 @@
 
     </div>
 }
+<br/>
 
+<hr />
 
 
         <div class="row placeholders center-block">

@@ -324,6 +324,12 @@
     <Content Include="Views\CarOwners\Edit.cshtml" />
     <Content Include="Views\CarOwners\Index.cshtml" />
     <Content Include="Views\Rides\MyRides.cshtml" />
+    <Content Include="Views\Rides\MyFutureRides.cshtml" />
+    <Content Include="Views\Rides\MyPastRides.cshtml" />
+    <Content Include="Views\Rides\AllFutureRides.cshtml" />
+    <Content Include="Views\Rides\AllPastRides.cshtml" />
+    <Content Include="Views\Rides\GoToUni.cshtml" />
+    <Content Include="Views\Rides\ReturnFromUni.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
