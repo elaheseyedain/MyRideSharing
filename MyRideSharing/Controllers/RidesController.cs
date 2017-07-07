@@ -30,17 +30,17 @@ namespace MyRideSharing.Controllers
             {
                 return RedirectToAction("SignIn", "Account");
             }
-            
+
             //var uid = u.Id;
             var UserRidesQuery =
                 from Seat in db.Seats
                 join Ride in db.Rides on Seat.RideId equals Ride.Id
                 where Seat.UserId == u.Id
                 select Ride;
-            
+
             var ur = UserRidesQuery.ToList();
             return View(ur.ToList());
-            
+
 
 
             //return View(db.Rides.ToList());
@@ -53,7 +53,7 @@ namespace MyRideSharing.Controllers
             {
                 return RedirectToAction("SignIn", "Account");
             }
-            
+
             var UserRidesQuery =
                 from Seat in db.Seats
                 join Ride in db.Rides on Seat.RideId equals Ride.Id
@@ -63,7 +63,7 @@ namespace MyRideSharing.Controllers
 
             var ur = UserRidesQuery.OrderBy(p => p.StartTime).ToList();
             return View(ur.ToList());
-            
+
         }
 
         public ActionResult AllPastRides()
@@ -95,14 +95,14 @@ namespace MyRideSharing.Controllers
             var uid = u.Id;
             CarOwner co = new CarOwner();
             co = db.CarOwners.Where(l => l.UserId.Equals(uid)).FirstOrDefault();
-            
+
             if (co == null)
             {
                 return RedirectToAction("Index", "Home");
             }
             var mr = db.Rides.Where(a => a.CarOwnerId == co.Id).OrderBy(p => p.StartTime).ToList();
             return View(mr.ToList());
-            
+
 
         }
 
@@ -148,28 +148,83 @@ namespace MyRideSharing.Controllers
 
         }
 
+        public ActionResult GoToUni()
+        {
+            var q = db.Rides.Where(a => (a.DestinationPlace.Contains("دانشگاه زنجان"))  && (a.StartTime >= DateTime.Now)).OrderBy(a => a.StartTime);
+            return View(q.ToList());
+
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]//todo
         public ActionResult GoToUni(string myDate, string SourcePlace)//(string myDate, string myStartTime, string SourcePlace)
         {
+            if (myDate != "")
+            {
+                DateTime pDate = Convert.ToDateTime(myDate);
+                DateTime justDate = Utility.ToMiladiDateTime(pDate);
+                var query = db.Rides.Where(a => (a.DestinationPlace.Contains("دانشگاه زنجان")) && (string.IsNullOrEmpty(SourcePlace) ? true : a.SourcePlace.Contains(SourcePlace)) && (a.StartTime >= DateTime.Now) && (string.IsNullOrEmpty(myDate) ? true : DbFunctions.TruncateTime(a.StartTime) == justDate)).OrderBy(a => a.StartTime);
+                return View(query.ToList());
+            }
+            else
+            {
+                var q = db.Rides.Where(a => (a.DestinationPlace.Contains("دانشگاه زنجان")) && (string.IsNullOrEmpty(SourcePlace) ? true : a.SourcePlace.Contains(SourcePlace)) && (a.StartTime >= DateTime.Now)).OrderBy(a => a.StartTime);
+                return View(q.ToList());
+            }
 
-            DateTime pDate = Convert.ToDateTime(myDate);
-            DateTime justDate = Utility.ToMiladiDateTime(pDate);
-            var q = db.Rides.Where(a => (a.DestinationPlace.Contains("دانشگاه زنجان")) && (string.IsNullOrEmpty(SourcePlace) ? true : a.SourcePlace.Contains(SourcePlace)) && (a.StartTime >= DateTime.Now) && (string.IsNullOrEmpty(myDate) ? true : DbFunctions.TruncateTime(a.StartTime) == justDate)).OrderBy(a => a.StartTime);
-            
-            return View(q.ToList());
         }
+
+        public ActionResult ReturnFromUni()
+        {
+            var q = db.Rides.Where(a => (a.SourcePlace.Contains("دانشگاه زنجان")) && (a.StartTime >= DateTime.Now)).OrderBy(a => a.StartTime);
+            return View(q.ToList());
+
+        }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]//todo
         public ActionResult ReturnFromUni(string myDate, string DestinationPlace)
         {
+            if (myDate != "")
+            {
+                DateTime pDate = Convert.ToDateTime(myDate);
+                DateTime justDate = Utility.ToMiladiDateTime(pDate);
+                var query = db.Rides.Where(a => (a.SourcePlace.Contains("دانشگاه زنجان")) && (string.IsNullOrEmpty(DestinationPlace) ? true : a.DestinationPlace.Contains(DestinationPlace)) && (a.StartTime >= DateTime.Now) && (string.IsNullOrEmpty(myDate) ? true : DbFunctions.TruncateTime(a.StartTime) == justDate)).OrderBy(a => a.StartTime);
+                return View(query.ToList());
+            }
+            else
+            {
+                var q = db.Rides.Where(a => (a.SourcePlace.Contains("دانشگاه زنجان")) && (string.IsNullOrEmpty(DestinationPlace) ? true : a.DestinationPlace.Contains(DestinationPlace)) && (a.StartTime >= DateTime.Now)).OrderBy(a => a.StartTime);
+                return View(q.ToList());
+            }
+        }
 
-            DateTime pDate = Convert.ToDateTime(myDate);
-            DateTime justDate = Utility.ToMiladiDateTime(pDate);
-            var q = db.Rides.Where(a => (a.SourcePlace.Contains("دانشگاه زنجان")) && (string.IsNullOrEmpty(DestinationPlace) ? true : a.DestinationPlace.Contains(DestinationPlace)) && (a.StartTime >= DateTime.Now) && (string.IsNullOrEmpty(myDate) ? true : DbFunctions.TruncateTime(a.StartTime) == justDate)).OrderBy(a => a.StartTime);
 
+        public ActionResult AvailableRides()
+        {
+            var q = db.Rides.Where(a => (a.StartTime >= DateTime.Now)).OrderBy(a => a.StartTime);
             return View(q.ToList());
+
+        }
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AvailableRides(string myDate, string SourcePlace, string DestinationPlace)
+        {
+            if (myDate != "")
+            {
+                DateTime pDate = Convert.ToDateTime(myDate);
+                DateTime justDate = Utility.ToMiladiDateTime(pDate);
+                var query = db.Rides.Where(a => (string.IsNullOrEmpty(SourcePlace) ? true : a.SourcePlace.Contains(SourcePlace)) && (string.IsNullOrEmpty(DestinationPlace) ? true : a.DestinationPlace.Contains(DestinationPlace)) && (a.StartTime >= DateTime.Now) && (string.IsNullOrEmpty(myDate) ? true : DbFunctions.TruncateTime(a.StartTime) == justDate)).OrderBy(a => a.StartTime);
+                return View(query.ToList());
+            }
+            else
+            {
+                var q = db.Rides.Where(a => (string.IsNullOrEmpty(SourcePlace) ? true : a.SourcePlace.Contains(SourcePlace)) && (string.IsNullOrEmpty(DestinationPlace) ? true : a.DestinationPlace.Contains(DestinationPlace)) && (a.StartTime >= DateTime.Now)).OrderBy(a => a.StartTime);
+                return View(q.ToList());
+            }
         }
 
         // GET: Rides/Details/5
@@ -207,7 +262,7 @@ namespace MyRideSharing.Controllers
             ride.EndTime = ride.EndTime.AddMinutes(ride.Duration);
             User u = new User();
             var uid = Int32.Parse(Session["userId"].ToString());
-            
+
             CarOwner co = db.CarOwners.Where(l => l.UserId.Equals(uid)).FirstOrDefault();
             ride.CarOwnerId = co.Id;
             if (ModelState.IsValid)
@@ -255,6 +310,87 @@ namespace MyRideSharing.Controllers
             }
             return View(ride);
         }
+
+        public ActionResult Reserve(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("AvailableRides");
+            }
+            Ride ride = db.Rides.Find(id);
+            if (ride == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ride);
+        }
+
+        [HttpPost, ActionName("Reserve")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ReserveConfirmed(int id)
+        {
+            Ride r = db.Rides.Find(id);
+            Seat s = new Seat();
+            User u = db.Users.Find(SessionPersister.UserId);
+            s.RideId = r.Id;
+            s.UserId = u.Id;
+            r.EmptySeats -= 1;
+           
+            if (ModelState.IsValid)
+            {
+
+                db.Entry(r).State = EntityState.Modified;
+                db.Seats.Add(s);//add the carOwner to the Seats
+                db.SaveChanges();
+                return RedirectToAction("MyRides");
+            }
+
+            return RedirectToAction("AvailableRides");
+        }
+
+
+        //CancelReserve for CarOwner should be manipulated
+        public ActionResult CancelReserve(int? id)
+        {
+            if (id == null)
+            {
+                return RedirectToAction("AvailableRides");
+            }
+            Ride ride = db.Rides.Find(id);
+            if (ride == null)
+            {
+                return HttpNotFound();
+            }
+            return View(ride);
+        }
+
+        [HttpPost, ActionName("CancelReserve")]
+        [ValidateAntiForgeryToken]
+        public ActionResult CancelReserveConfirmed(int id)
+        {
+            Ride r = db.Rides.Find(id);
+            User u = db.Users.Find(SessionPersister.UserId);
+            Seat s = db.Seats.Where(a => (a.UserId.Equals(u.Id)) && (a.RideId.Equals(r.Id))).FirstOrDefault();
+            
+            //s.RideId = r.Id;
+            //s.UserId = u.Id;
+            r.EmptySeats += 1;
+
+            if (ModelState.IsValid)
+            {
+
+                db.Entry(r).State = EntityState.Modified;
+                db.Seats.Remove(s);//delete that row
+                db.SaveChanges();
+                return RedirectToAction("MyRides");
+            }
+
+            return RedirectToAction("AvailableRides");
+            //db.Appointments.Remove(ap);
+
+        }
+
+
 
         // GET: Rides/Delete/5
         public ActionResult Delete(int? id)

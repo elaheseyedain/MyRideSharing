@@ -1,0 +1,230 @@
+﻿@model MyRideSharing.Models.Ride
+
+
+@{
+    ViewBag.Title = "کنسل کردن سفر";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>کنسل کردن سفر</h2>
+
+@functions{
+    public string pdate(DayOfWeek day)
+    {
+        switch (day)
+        {
+            case DayOfWeek.Sunday:
+                return "یکشنبه";
+
+
+            case DayOfWeek.Monday:
+                return "دوشنبه";
+
+            case DayOfWeek.Tuesday:
+                return "سه‌شنبه";
+
+            case DayOfWeek.Wednesday:
+                return "چهارشنبه";
+
+            case DayOfWeek.Thursday:
+                return "پنج‌شنبه";
+
+            case DayOfWeek.Friday:
+                return "جمعه";
+
+            case DayOfWeek.Saturday:
+                return "شنبه";
+
+            default:
+                return "روز هفته";
+        }
+    }
+}
+<h5>آیا از کنسل کردن رزرو خود مطمئن هستید؟</h5>
+<div>
+    <hr />
+    <dl class="main-container">
+        <dt>
+            @Html.DisplayNameFor(model => model.StartTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StartTime)<span>&nbsp;</span>
+            <span>@pdate(Model.StartTime.DayOfWeek)</span>
+        </dd>
+        <hr />
+        @*******@
+        <dt>
+            @Html.DisplayName("ساعت")
+        </dt>
+        @{string StartHHmm = Model.StartTime.ToString("HH:mm");  }
+
+
+        <dd>
+            @Html.DisplayFor(model => StartHHmm)
+        </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Duration)
+        </dt>
+        @{
+            string EndHm = Model.EndTime.ToString("HH:mm");
+            string StartHm = Model.StartTime.ToString("HH:mm");
+            TimeSpan duration = DateTime.Parse(EndHm).Subtract(DateTime.Parse(StartHm));
+            int x = (int)duration.TotalMinutes;
+
+        }
+        <dd>
+            @Html.DisplayFor(model => x)
+        </dd>
+        <hr />
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SourcePlace)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SourcePlace)
+        </dd>
+
+        <hr />
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DestinationPlace)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DestinationPlace)
+        </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.User.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.User.FirstName)<span>&nbsp;</span>@Html.DisplayFor(model => model.CarOwner.User.LastName)
+
+        </dd>
+        <hr />
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.CarName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.CarName)
+        </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.CarProdYear)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.CarProdYear)
+        </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.CarColor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.CarColor)
+        </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.CarPlate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.CarPlate)
+        </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.LicenseNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.LicenseNumber)
+        </dd>
+        <hr />
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.User.Gender1.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.User.Gender1.Title)
+        </dd>
+        <hr />
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.User.StudentId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.User.StudentId)
+        </dd>
+
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.User.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.User.Phone)
+        </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.User.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.User.Email)
+        </dd>
+        <hr />
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.Description)
+        </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <hr />
+
+    </dl>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="کنسل" class="btn btn-danger" /> |
+            @Html.ActionLink("لیست سفرها", "AvailableRides")
+        </div>
+    }
+</div>

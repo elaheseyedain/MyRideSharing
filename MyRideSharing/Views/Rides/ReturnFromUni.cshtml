@@ -8,69 +8,74 @@
 
 
 
-<hr />
-<br />
-<h3>میخوام برگردم از دانشگاه </h3>
-<br />
-@*
-    @using (Html.BeginForm("ReturnFromUni", "Rides", FormMethod.Post, new { @class = "form-vertical text-right" }))
-    {
-        @Html.AntiForgeryToken()
-        <div class="row">
-            <h4>میخوام برگردم از دانشگاه</h4>
-            <div class="col-lg-4"></div>
 
+<form action="/Rides/ReturnFromUni" class="form-vertical text-right" method="post" novalidate="novalidate">
 
-            <div class="col-lg-2">
-                <div class="col-lg-10">
-                    <label for="GoUni">&nbsp; </label><br />
-                    <button class="btn btn-default-custom" name="submit" type="submit">جستجو</button>
-                </div>
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2>میخوام برگردم از دانشگاه</h2>
+        <div class="col-lg-4"></div>
+
+        <div class="col-lg-2">
+            <div class="col-lg-10">
+                <label for="GoUni">&nbsp; </label><br>
+                <button class="btn btn-default-custom" name="submit" type="submit">جستجو</button>
             </div>
+        </div>
+
+
+        <div class="col-lg-3">
+            <div class="col-lg-10">
+                <span class="fa fa-calendar" aria-hidden="true"></span>
 
 
 
+                <label for="myDate">تاریخ</label>
 
-            <!--nullable date. to do-->
-            <div class="col-lg-3">
-                <div class="col-lg-10">
-                    <span class="fa fa-calendar" aria-hidden="true"></span>
 
-                    @Html.LabelFor(model => model.myDate)
+                <input class="text-center" data-val="true" data-val-regex="تاریخ ثبت را بدرستی وارد کنید" data-val-regex-pattern="^(13\d{2}|[1-9]\d)/(1[012]|0?[1-9])/([12]\d|3[01]|0?[1-9])$" id="myDate" name="myDate" onclick="PersianDatePicker.Show(this, '1396/04/16');" type="text" value="">
 
-                    @Html.EditorFor(model => model.myDate)
-                    <br />
 
-                </div>
+
+                <br>
 
             </div>
-
-
-
-
-            <div class="col-lg-3">
-                <div class="col-lg-10">
-
-
-                    <span class="fa fa-map-marker" aria-hidden="true">
-                    </span>
-                    @Html.LabelFor(model => model.DestinationPlace)
-
-                    @Html.EditorFor(model => model.DestinationPlace)
-                </div>
-
-            </div>
-
-
-
-
 
         </div>
-    }
-    <br />
 
-    <hr />
-*@
+
+
+
+
+
+        <div class="col-lg-3">
+            <div class="col-lg-10">
+
+
+                <span class="fa fa-map-marker" aria-hidden="true">
+                </span>
+
+
+
+                <label for="DestinationPlace">مقصد</label>
+
+                <input class="text-box single-line" id="DestinationPlace" name="DestinationPlace" type="text" value="">
+            </div>
+
+        </div>
+
+
+
+
+
+    </div>
+</form>
+
+<hr />
+<br />
+
+
 
 <div class="table-responsive">
     <table class="table table-striped">
@@ -204,4 +209,21 @@
 
     </table>
 </div>
+
+
+
+@section styles{
+    <link href="~/Scripts/JsDatePicker/PersianDatePicker.min.css" rel="stylesheet" />
+}
+
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/JsDatePicker/PersianDatePicker.min.js"></script>
+    <script type="text/javascript">
+        $('.clockpicker').clockpicker();
+    </script>
+}
+
 

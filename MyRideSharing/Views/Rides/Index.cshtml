@@ -134,14 +134,12 @@
                     @Html.DisplayFor(modelItem => item.EmptySeats)
                 </td>
 
-                @*<td>
+                <td>
 
 
-                    @Html.ActionLink("ویرایش", "Edit", new { id = item.Id })  <span> |</span>
-                    @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) <span> |</span>
-                    @Html.ActionLink("کنسل", "Delete", new { id = item.Id })
+                    @Html.ActionLink("کنسل", "CancelReserve", new { id = item.Id })
 
-                </td>*@
+                </td>
             </tr>
          }
 

@@ -1,16 +1,62 @@
-﻿@model IEnumerable<MyRideSharing.Models.Ride>
+﻿
+@model IEnumerable<MyRideSharing.Models.Ride>
 
 @{
-    ViewBag.Title = "سفرهای آتی من";
+    ViewBag.Title = "لیست سفرهای آتی";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<form action="/Rides/AvailableRides" class="form-vertical text-right" method="post" novalidate="novalidate">
 
+    @Html.AntiForgeryToken()
+
+    <div class="row">
+        <h2>سفرهای آتی</h2>
+        <div class="col-lg-3"></div>
+
+        <div class="col-lg-2">
+            <div class="col-lg-10">
+                <label for="GoUni">&nbsp; </label><br>
+                <button class="btn btn-default-custom" name="submit" type="submit">جستجو</button>
+            </div>
+        </div>
+
+        <div class="col-lg-2">
+            <div class="col-lg-10">
+                <span class="fa fa-calendar" aria-hidden="true"></span>
+                <label for="myDate">تاریخ</label>
+                <input class="text-center" data-val="true" data-val-regex="تاریخ ثبت را بدرستی وارد کنید" data-val-regex-pattern="^(13\d{2}|[1-9]\d)/(1[012]|0?[1-9])/([12]\d|3[01]|0?[1-9])$" id="myDate" name="myDate" onclick="PersianDatePicker.Show(this, '1396/04/16');" type="text" value="">
+
+                <br>
+
+            </div>
+
+        </div>
+
+        <div class="col-lg-2">
+            <div class="col-lg-10">
+                <span class="fa fa-map-marker" aria-hidden="true"> </span>
+                <label for="DestinationPlace">مقصد</label>
+                <input class="text-box single-line" id="DestinationPlace" name="DestinationPlace" type="text" value="">
+            </div>
+        </div>
+
+        <div class="col-lg-2">
+            <div class="col-lg-10">
+                <span class="fa fa-map-marker" aria-hidden="true">
+                </span>
+                <label for="SourcePlace">مبدا</label>
+                <input class="text-box single-line" id="SourcePlace" name="SourcePlace" type="text" value="">
+            </div>
+
+        </div>
+
+    </div>
+</form>
 
 <hr />
 <br />
-<h3>سفرهای آتی من </h3>
-<br />
+
 
 
 <div class="table-responsive">
@@ -38,6 +84,9 @@
                 </th>
                 <th class="text-right">
                     @Html.DisplayNameFor(model => model.CarOwner.User.FirstName)
+                </th>
+                <th class="text-right">
+                    @Html.DisplayNameFor(model => model.CarOwner.CarName)
                 </th>
                 <th class="text-right">
                     @Html.DisplayNameFor(model => model.Price)
@@ -81,7 +130,7 @@
             }
         }
         @foreach (var item in Model)
-        {
+            {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.StartTime)
@@ -122,15 +171,19 @@
                 </td>
 
                 <td>
+                    @Html.DisplayFor(modelItem => item.CarOwner.CarName)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.EmptySeats)
                 </td>
+
                 <td>
 
 
-                    @Html.ActionLink("کنسل", "CancelReserve", new { id = item.Id })
+                    @Html.ActionLink("رزرو", "Reserve", new { id = item.Id })
 
                 </td>
             </tr>
@@ -138,7 +191,24 @@
 
     </table>
 </div>
-<p>
-    @Html.ActionLink("ثبت سفر", "Create")
-</p>
+
+
+
+
+@section styles{
+    <link href="~/Scripts/JsDatePicker/PersianDatePicker.min.css" rel="stylesheet" />
+}
+
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/JsDatePicker/PersianDatePicker.min.js"></script>
+    <script type="text/javascript">
+        $('.clockpicker').clockpicker();
+    </script>
+}
+
+
+
 

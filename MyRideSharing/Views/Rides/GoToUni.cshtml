@@ -8,142 +8,224 @@
 
 
 
+
+<form action="/Rides/GoToUni" class="form-vertical text-right" method="post" novalidate="novalidate">
+
+    @Html.AntiForgeryToken()
+    
+    <div class="row">
+        <h2>میخوام برم دانشگاه</h2>
+        <div class="col-lg-4"></div>
+
+        <div class="col-lg-2">
+            <div class="col-lg-10">
+                <label for="GoUni">&nbsp; </label><br>
+                <button class="btn btn-default-custom" name="submit" type="submit">جستجو</button>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="col-lg-3">
+            <div class="col-lg-10">
+                <span class="fa fa-calendar" aria-hidden="true"></span>
+
+
+
+                <label for="myDate">تاریخ</label>
+
+
+                <input class="text-center" data-val="true" data-val-regex="تاریخ ثبت را بدرستی وارد کنید" data-val-regex-pattern="^(13\d{2}|[1-9]\d)/(1[012]|0?[1-9])/([12]\d|3[01]|0?[1-9])$" id="myDate" name="myDate" onclick="PersianDatePicker.Show(this, '1396/04/16');" type="text" value="">
+
+
+
+                <br>
+
+            </div>
+
+        </div>
+
+
+
+
+
+
+        <div class="col-lg-3">
+            <div class="col-lg-10">
+
+
+                <span class="fa fa-map-marker" aria-hidden="true">
+                </span>
+
+
+
+                <label for="SourcePlace">مبدا</label>
+
+                <input class="text-box single-line" id="SourcePlace" name="SourcePlace" type="text" value="">
+            </div>
+
+        </div>
+
+
+
+
+
+    </div>
+</form>
+
 <hr />
 <br />
-<h3>میخوام برم دانشگاه </h3>
-<br />
 
 
-<div class="table-responsive">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th class="text-right">
-                    @Html.DisplayNameFor(model => model.StartTime)
-                </th>
 
-                <th class="text-right">
-                    @Html.DisplayName("روز")
-                </th>
-                <th class="text-right">
-                    @Html.DisplayName("ساعت")
-                </th>
-                <th class="text-right">
-                    @Html.DisplayName("مدت زمان ")
-                </th>
-                <th class="text-right">
-                    @Html.DisplayNameFor(model => model.SourcePlace)
-                </th>
-                <th class="text-right">
-                    @Html.DisplayNameFor(model => model.DestinationPlace)
-                </th>
-                <th class="text-right">
-                    @Html.DisplayNameFor(model => model.CarOwner.User.FirstName)
-                </th>
-                <th class="text-right">
-                    @Html.DisplayNameFor(model => model.CarOwner.CarName)
-                </th>
-                <th class="text-right">
-                    @Html.DisplayNameFor(model => model.Price)
-                </th>
-                <th class="text-right">
-                    @Html.DisplayNameFor(model => model.EmptySeats)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        @functions{
-            public string pdate(DayOfWeek day)
-            {
-                switch (day)
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th class="text-right">
+                        @Html.DisplayNameFor(model => model.StartTime)
+                    </th>
+
+                    <th class="text-right">
+                        @Html.DisplayName("روز")
+                    </th>
+                    <th class="text-right">
+                        @Html.DisplayName("ساعت")
+                    </th>
+                    <th class="text-right">
+                        @Html.DisplayName("مدت زمان ")
+                    </th>
+                    <th class="text-right">
+                        @Html.DisplayNameFor(model => model.SourcePlace)
+                    </th>
+                    <th class="text-right">
+                        @Html.DisplayNameFor(model => model.DestinationPlace)
+                    </th>
+                    <th class="text-right">
+                        @Html.DisplayNameFor(model => model.CarOwner.User.FirstName)
+                    </th>
+                    <th class="text-right">
+                        @Html.DisplayNameFor(model => model.CarOwner.CarName)
+                    </th>
+                    <th class="text-right">
+                        @Html.DisplayNameFor(model => model.Price)
+                    </th>
+                    <th class="text-right">
+                        @Html.DisplayNameFor(model => model.EmptySeats)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            @functions{
+                public string pdate(DayOfWeek day)
                 {
-                    case DayOfWeek.Sunday:
-                        return "یکشنبه";
+                    switch (day)
+                    {
+                        case DayOfWeek.Sunday:
+                            return "یکشنبه";
 
 
-                    case DayOfWeek.Monday:
-                        return "دوشنبه";
+                        case DayOfWeek.Monday:
+                            return "دوشنبه";
 
-                    case DayOfWeek.Tuesday:
-                        return "سه‌شنبه";
+                        case DayOfWeek.Tuesday:
+                            return "سه‌شنبه";
 
-                    case DayOfWeek.Wednesday:
-                        return "چهارشنبه";
+                        case DayOfWeek.Wednesday:
+                            return "چهارشنبه";
 
-                    case DayOfWeek.Thursday:
-                        return "پنج‌شنبه";
+                        case DayOfWeek.Thursday:
+                            return "پنج‌شنبه";
 
-                    case DayOfWeek.Friday:
-                        return "جمعه";
+                        case DayOfWeek.Friday:
+                            return "جمعه";
 
-                    case DayOfWeek.Saturday:
-                        return "شنبه";
+                        case DayOfWeek.Saturday:
+                            return "شنبه";
 
-                    default:
-                        return "روز هفته";
+                        default:
+                            return "روز هفته";
+                    }
                 }
             }
-        }
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.StartTime)
-                </td>
-
-                <td>
-                    <span>@pdate(item.StartTime.DayOfWeek)</span>
-                </td>
-                @{string StartHHmm = item.StartTime.ToString("HH:mm");  }
-
-                <td>
-                    @Html.DisplayFor(modelItem => StartHHmm)
-                </td>
-
-                @{
-                    string EndHm = item.EndTime.ToString("HH:mm");
-                    string StartHm = item.StartTime.ToString("HH:mm");
-                    TimeSpan duration = DateTime.Parse(EndHm).Subtract(DateTime.Parse(StartHm));
-                    int x = (int)duration.TotalMinutes;
-
-                }
-
-                <td>
-                    @Html.DisplayFor(modelItem => x)
-                </td>
-
-
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.SourcePlace)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DestinationPlace)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.CarOwner.User.FirstName)<span>&nbsp;</span>@Html.DisplayFor(modelItem => item.CarOwner.User.LastName)
-                </td>
-
-                <td>
-                    @Html.DisplayFor(modelItem => item.CarOwner.CarName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Price)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.EmptySeats)
-                </td>
-
-                <td>
-
-
-                        @Html.ActionLink("رزرو", "Reserve", new { id = item.Id }) 
-
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.StartTime)
                     </td>
-            </tr>
+
+                    <td>
+                        <span>@pdate(item.StartTime.DayOfWeek)</span>
+                    </td>
+                    @{string StartHHmm = item.StartTime.ToString("HH:mm");  }
+
+                    <td>
+                        @Html.DisplayFor(modelItem => StartHHmm)
+                    </td>
+
+                    @{
+                        string EndHm = item.EndTime.ToString("HH:mm");
+                        string StartHm = item.StartTime.ToString("HH:mm");
+                        TimeSpan duration = DateTime.Parse(EndHm).Subtract(DateTime.Parse(StartHm));
+                        int x = (int)duration.TotalMinutes;
+
                     }
 
-    </table>
-</div>
+                    <td>
+                        @Html.DisplayFor(modelItem => x)
+                    </td>
 
+
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SourcePlace)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DestinationPlace)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CarOwner.User.FirstName)<span>&nbsp;</span>@Html.DisplayFor(modelItem => item.CarOwner.User.LastName)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CarOwner.CarName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.EmptySeats)
+                    </td>
+
+                    <td>
+
+
+                            @Html.ActionLink("رزرو", "Reserve", new { id = item.Id })
+
+                        </td>
+                </tr>
+                        }
+
+        </table>
+    </div>
+
+
+
+
+@section styles{
+    <link href="~/Scripts/JsDatePicker/PersianDatePicker.min.css" rel="stylesheet" />
+}
+
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/JsDatePicker/PersianDatePicker.min.js"></script>
+    <script type="text/javascript">
+        $('.clockpicker').clockpicker();
+    </script>
+}

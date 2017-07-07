@@ -330,6 +330,10 @@
     <Content Include="Views\Rides\AllPastRides.cshtml" />
     <Content Include="Views\Rides\GoToUni.cshtml" />
     <Content Include="Views\Rides\ReturnFromUni.cshtml" />
+    <Content Include="Views\Shared\GoUniSearch.cshtml" />
+    <Content Include="Views\Rides\AvailableRides.cshtml" />
+    <Content Include="Views\Rides\Reserve.cshtml" />
+    <Content Include="Views\Rides\CancelReserve.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
