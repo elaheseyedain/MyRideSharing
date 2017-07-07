@@ -1,80 +1,85 @@
 ﻿@model MyRideSharing.Models.Ride
 
+
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "حذف سفر";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Delete</h2>
+<h2>حذف سفر</h2>
 
-<h3>Are you sure you want to delete this?</h3>
+@functions{
+    public string pdate(DayOfWeek day)
+    {
+        switch (day)
+        {
+            case DayOfWeek.Sunday:
+                return "یکشنبه";
+
+
+            case DayOfWeek.Monday:
+                return "دوشنبه";
+
+            case DayOfWeek.Tuesday:
+                return "سه‌شنبه";
+
+            case DayOfWeek.Wednesday:
+                return "چهارشنبه";
+
+            case DayOfWeek.Thursday:
+                return "پنج‌شنبه";
+
+            case DayOfWeek.Friday:
+                return "جمعه";
+
+            case DayOfWeek.Saturday:
+                return "شنبه";
+
+            default:
+                return "روز هفته";
+        }
+    }
+}
+<h5>آیا از حذف سفر خود مطمئن هستید؟</h5>
 <div>
-    <h4>Ride</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.SourceLatitude)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SourceLatitude)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SourceLongitude)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SourceLongitude)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DestinationLatitude)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DestinationLatitude)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DestinationLongitude)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DestinationLongitude)
-        </dd>
-
+    <dl class="main-container">
         <dt>
             @Html.DisplayNameFor(model => model.StartTime)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.StartTime)
+            @Html.DisplayFor(model => model.StartTime)<span>&nbsp;</span>
+            <span>@pdate(Model.StartTime.DayOfWeek)</span>
         </dd>
-
+        <hr />
+        @*******@
         <dt>
-            @Html.DisplayNameFor(model => model.EndTime)
+            @Html.DisplayName("ساعت")
         </dt>
+        @{string StartHHmm = Model.StartTime.ToString("HH:mm");  }
+
 
         <dd>
-            @Html.DisplayFor(model => model.EndTime)
+            @Html.DisplayFor(model => StartHHmm)
         </dd>
+        <hr />
 
         <dt>
-            @Html.DisplayNameFor(model => model.Price)
+            @Html.DisplayNameFor(model => model.Duration)
         </dt>
+        @{
+            string EndHm = Model.EndTime.ToString("HH:mm");
+            string StartHm = Model.StartTime.ToString("HH:mm");
+            TimeSpan duration = DateTime.Parse(EndHm).Subtract(DateTime.Parse(StartHm));
+            int x = (int)duration.TotalMinutes;
 
+        }
         <dd>
-            @Html.DisplayFor(model => model.Price)
+            @Html.DisplayFor(model => x)
         </dd>
+        <hr />
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.SourcePlace)
@@ -84,6 +89,9 @@
             @Html.DisplayFor(model => model.SourcePlace)
         </dd>
 
+        <hr />
+
+
         <dt>
             @Html.DisplayNameFor(model => model.DestinationPlace)
         </dt>
@@ -91,15 +99,78 @@
         <dd>
             @Html.DisplayFor(model => model.DestinationPlace)
         </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <hr />
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="حذف سفر" class="btn btn-default" /> |
+            @Html.ActionLink("لیست سفرهای راننده", "DriverRides")
         </div>
     }
 </div>
+
+
+<h3>لیست مسافران</h3>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-right">
+                    @Html.DisplayName("نام")
+                </th>
+                <th class="text-right">
+                    @Html.DisplayName(" جنسیت")
+                </th>
+                <th class="text-right">
+                    @Html.DisplayName(" موبایل")
+                </th>
+                <th class="text-right">
+                    @Html.DisplayName(" ایمیل")
+                </th>
+                <th class="text-right">
+                    @Html.DisplayName(" شماره دانشجویی")
+                </th>
+            </tr>
+        </thead>
+
+        @foreach (MyRideSharing.Models.Seat s in ViewBag.Passengers)
+            {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => s.User.FirstName)<span>&nbsp;</span>@Html.DisplayFor(modelItem => s.User.LastName)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => s.User.Gender1.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => s.User.Phone)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => s.User.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => s.User.StudentId)
+                </td>
+            </tr>
+                    }
+    </table>
+</div>
+
+

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<MyRideSharing.Models.Ride>
 
 @{
-    ViewBag.Title = "سفرهای من";
+    ViewBag.Title = "سفرهای آتی من به عنوان مسافر";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,9 +9,9 @@
 
 <hr />
 <br />
-<h3>سفرهای من </h3>
+<h3>سفرهای آتی من به عنوان مسافر </h3>
 <br />
-@ViewBag.Error
+
 
 <div class="table-responsive">
     <table class="table table-striped">
@@ -38,9 +38,6 @@
                 </th>
                 <th class="text-right">
                     @Html.DisplayNameFor(model => model.CarOwner.User.FirstName)
-                </th>
-                <th class="text-right">
-                    @Html.DisplayNameFor(model => model.CarOwner.CarName)
                 </th>
                 <th class="text-right">
                     @Html.DisplayNameFor(model => model.Price)
@@ -105,7 +102,7 @@
                     TimeSpan duration = DateTime.Parse(EndHm).Subtract(DateTime.Parse(StartHm));
                     int x = (int)duration.TotalMinutes;
 
-                    }
+                }
 
                 <td>
                     @Html.DisplayFor(modelItem => x)
@@ -125,15 +122,11 @@
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.CarOwner.CarName)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.EmptySeats)
                 </td>
-
                 <td>
 
 
@@ -141,11 +134,8 @@
 
                 </td>
             </tr>
-         }
+                    }
 
     </table>
 </div>
-<p>
-    @Html.ActionLink("ثبت سفر", "Create")
-</p>
 

@@ -1,0 +1,65 @@
+﻿@model MyRideSharing.Models.Seat
+
+
+@{
+    ViewBag.Title = "لیست مسافران";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>لیست مسافران</h2>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-right">
+                    @Html.DisplayName("نام")
+                </th>
+                <th class="text-right">
+                    @Html.DisplayName(" جنسیت")
+                </th>
+                <th class="text-right">
+                    @Html.DisplayName(" موبایل")
+                </th>
+                <th class="text-right">
+                    @Html.DisplayName(" ایمیل")
+                </th>
+                <th class="text-right">
+                    @Html.DisplayName(" شماره دانشجویی")
+                </th>
+            </tr>
+        </thead>
+
+        @foreach (MyRideSharing.Models.Seat s in ViewBag.Passengers)
+            {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => s.User.FirstName)<span>&nbsp;</span>@Html.DisplayFor(modelItem => s.User.LastName)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => s.User.Gender1.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => s.User.Phone)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => s.User.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => s.User.StudentId)
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+<br/>
+<hr/>
+@Html.ActionLink("لیست سفرهای راننده", "DriverRides")
+
+
+
+

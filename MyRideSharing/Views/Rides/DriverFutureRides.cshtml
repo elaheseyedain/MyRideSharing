@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<MyRideSharing.Models.Ride>
 
 @{
-    ViewBag.Title = "سفرهای قبلی من به عنوان راننده";
+    ViewBag.Title = "سفرهای آتی من به عنوان راننده";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
 <hr />
 <br />
-<h3>سفرهای قبلی من به عنوان راننده</h3>
+<h3>سفرهای آتی من به عنوان راننده</h3>
 <br />
 <div class="table-responsive">
     <table class="table table-striped">
@@ -120,13 +120,11 @@
                     @Html.DisplayFor(modelItem => item.EmptySeats)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Duration)
-                </td>
-                <td>
 
 
                     @Html.ActionLink("ویرایش", "Edit", new { id = item.Id })  <span> |</span>
                     @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) <span> |</span>
+                    @Html.ActionLink("لیست مسافران", "PassengersList", new { id = item.Id }) <span> |</span>
                     @Html.ActionLink("کنسل", "Delete", new { id = item.Id })
 
                 </td>
@@ -135,5 +133,6 @@
 
     </table>
 </div>
+
 
 

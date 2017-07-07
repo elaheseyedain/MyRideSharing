@@ -85,7 +85,8 @@ namespace MyRideSharing.Controllers
 
         }
 
-        public ActionResult MyRides()
+
+        public ActionResult DriverRides()//as a CarOwner
         {
             User u = db.Users.Find(SessionPersister.UserId);
             if (u == null)
@@ -100,13 +101,13 @@ namespace MyRideSharing.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
-            var mr = db.Rides.Where(a => a.CarOwnerId == co.Id).OrderBy(p => p.StartTime).ToList();
+            var mr = db.Rides.Where(a => a.CarOwnerId == co.Id).OrderByDescending(p => p.StartTime).ToList();
             return View(mr.ToList());
 
 
         }
 
-        public ActionResult MyFutureRides()
+        public ActionResult DriverFutureRides()//as a CarOwner
         {
             User u = db.Users.Find(SessionPersister.UserId);
             if (u == null)
@@ -127,7 +128,7 @@ namespace MyRideSharing.Controllers
 
         }
 
-        public ActionResult MyPastRides()
+        public ActionResult DriverPastRides()//as a CarOwner
         {
             User u = db.Users.Find(SessionPersister.UserId);
             if (u == null)
@@ -148,15 +149,101 @@ namespace MyRideSharing.Controllers
 
         }
 
+
+        public ActionResult PassengerRides()//as a Passenger
+        {
+            User u = db.Users.Find(SessionPersister.UserId);
+            if (u == null)
+            {
+                return RedirectToAction("SignIn", "Account");
+            }
+            var UserRidesQuery =
+                from Seat in db.Seats
+                join Ride in db.Rides on Seat.RideId equals Ride.Id
+                where Seat.UserId == u.Id
+                select Ride ;
+
+            var CarOwnerRidesQuery =
+                from Seat in db.Seats
+                join Ride in db.Rides on Seat.RideId equals Ride.Id
+                where Seat.Ride.CarOwner.UserId == u.Id
+                select Ride;
+            
+            IEnumerable<Ride> exceptQuery =
+                UserRidesQuery.Except(CarOwnerRidesQuery).OrderBy(a => a.StartTime);
+            if (exceptQuery == null)
+            {
+                return RedirectToAction("AvailableRides");
+            }
+            return View(exceptQuery.ToList());
+
+
+        }
+
+        public ActionResult FuturePassengerRides()//as a Passenger
+        {
+            User u = db.Users.Find(SessionPersister.UserId);
+            if (u == null)
+            {
+                return RedirectToAction("SignIn", "Account");
+            }
+            var UserRidesQuery =
+                from Seat in db.Seats
+                join Ride in db.Rides on Seat.RideId equals Ride.Id
+                where Seat.UserId == u.Id
+                select Ride;
+
+            var CarOwnerRidesQuery =
+                from Seat in db.Seats
+                join Ride in db.Rides on Seat.RideId equals Ride.Id
+                where Seat.Ride.CarOwner.UserId == u.Id
+                select Ride;
+
+            IEnumerable<Ride> exceptQuery =
+                UserRidesQuery.Except(CarOwnerRidesQuery).Where(a => a.StartTime >= DateTime.Now).OrderBy(a => a.StartTime);
+            if (exceptQuery == null)
+            {
+                return RedirectToAction("AvailableRides");
+            }
+            return View(exceptQuery.ToList());
+        }
+
+        public ActionResult PastPassengerRides()//as a Passenger
+        {
+            User u = db.Users.Find(SessionPersister.UserId);
+            if (u == null)
+            {
+                return RedirectToAction("SignIn", "Account");
+            }
+            var UserRidesQuery =
+                from Seat in db.Seats
+                join Ride in db.Rides on Seat.RideId equals Ride.Id
+                where Seat.UserId == u.Id
+                select Ride;
+
+            var CarOwnerRidesQuery =
+                from Seat in db.Seats
+                join Ride in db.Rides on Seat.RideId equals Ride.Id
+                where Seat.Ride.CarOwner.UserId == u.Id
+                select Ride;
+
+            IEnumerable<Ride> exceptQuery =
+                UserRidesQuery.Except(CarOwnerRidesQuery).Where(a => a.StartTime <= DateTime.Now).OrderByDescending(a => a.StartTime);
+            if (exceptQuery == null)
+            {
+                return RedirectToAction("AvailableRides");
+            }
+            return View(exceptQuery.ToList());
+        }
+
         public ActionResult GoToUni()
         {
             var q = db.Rides.Where(a => (a.DestinationPlace.Contains("دانشگاه زنجان"))  && (a.StartTime >= DateTime.Now)).OrderBy(a => a.StartTime);
             return View(q.ToList());
 
         }
-
         [HttpPost]
-        [ValidateAntiForgeryToken]//todo
+        [ValidateAntiForgeryToken]
         public ActionResult GoToUni(string myDate, string SourcePlace)//(string myDate, string myStartTime, string SourcePlace)
         {
             if (myDate != "")
@@ -311,16 +398,44 @@ namespace MyRideSharing.Controllers
             return View(ride);
         }
 
+
+        public ActionResult PassengersList(int? id)//as a Passenger
+        {
+            User u = db.Users.Find(SessionPersister.UserId);
+            if (u == null)
+            {
+                return RedirectToAction("SignIn", "Account");
+            }
+            Ride r = db.Rides.Find(id);
+            ViewBag.Passengers = db.Seats.Where(acc => (acc.RideId == id)).ToList();
+            
+            if (r == null)
+            {
+                return RedirectToAction("DriverRides");
+            }
+            return View();
+        }
+
         public ActionResult Reserve(int? id)
         {
+
             if (id == null)
             {
                 return RedirectToAction("AvailableRides");
             }
+
+
+            User u = db.Users.Find(SessionPersister.UserId);
             Ride ride = db.Rides.Find(id);
             if (ride == null)
             {
                 return HttpNotFound();
+            }
+
+            if (ride.CarOwner.UserId == u.Id)
+            {
+                ViewBag.Error = "شما نمی توانید در سفر خود صندلی رزرو کنید ";
+                return RedirectToAction("Index");
             }
             return View(ride);
         }
@@ -335,21 +450,25 @@ namespace MyRideSharing.Controllers
             s.RideId = r.Id;
             s.UserId = u.Id;
             r.EmptySeats -= 1;
-           
+
+            if (r.CarOwner.UserId == u.Id)
+            {
+                ViewBag.Error = "شما نمی توانید در سفر خود صندلی رزرو کنید ";
+                return RedirectToAction("Index");
+            }
             if (ModelState.IsValid)
             {
 
                 db.Entry(r).State = EntityState.Modified;
                 db.Seats.Add(s);//add the carOwner to the Seats
                 db.SaveChanges();
-                return RedirectToAction("MyRides");
+                return RedirectToAction("FuturePassengerRides");
             }
 
             return RedirectToAction("AvailableRides");
         }
 
-
-        //CancelReserve for CarOwner should be manipulated
+        
         public ActionResult CancelReserve(int? id)
         {
             if (id == null)
@@ -395,16 +514,19 @@ namespace MyRideSharing.Controllers
         // GET: Rides/Delete/5
         public ActionResult Delete(int? id)
         {
+            Ride r = db.Rides.Find(id);
+            ViewBag.Passengers = db.Seats.Where(acc => (acc.RideId == id)).ToList();
+
+            
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Ride ride = db.Rides.Find(id);
-            if (ride == null)
+            if (r == null)
             {
                 return HttpNotFound();
             }
-            return View(ride);
+            return View(r);
         }
 
         // POST: Rides/Delete/5
@@ -412,10 +534,25 @@ namespace MyRideSharing.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Ride ride = db.Rides.Find(id);
-            db.Rides.Remove(ride);
+
+            User u = db.Users.Find(SessionPersister.UserId);
+            if (u == null)
+            {
+                return RedirectToAction("SignIn", "Account");
+            }
+            Ride r = db.Rides.Find(id);
+            var DeleteSeats = new List<Seat>();
+
+            DeleteSeats = db.Seats.Where(a => a.RideId == id).ToList();
+            db.Seats.RemoveRange(DeleteSeats);
+            
+            //Seat s = new Seat();
+            //IEnumerable<Seat> DeleteSeats = db.Seats.Where(a => a.RideId == id);
+
             db.SaveChanges();
-            return RedirectToAction("Index");
+            db.Rides.Remove(r);
+            db.SaveChanges();
+            return RedirectToAction("DriverFutureRides");
         }
 
         protected override void Dispose(bool disposing)
