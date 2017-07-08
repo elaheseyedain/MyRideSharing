@@ -1,18 +1,15 @@
 ﻿@model IEnumerable<MyRideSharing.Models.Ride>
 
 @{
-    ViewBag.Title = "سفرهای من به عنوان مسافر";
+    ViewBag.Title = "سفرهای این راننده";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 
-
 <hr />
 <br />
-<h3>سفرهای من به عنوان مسافر </h3>
+<h3>سفرهای @Html.DisplayNameFor(model => model.CarOwner.User.LastName) به عنوان راننده</h3>
 <br />
-
-
 <div class="table-responsive">
     <table class="table table-striped">
         <thead>
@@ -37,13 +34,13 @@
                     @Html.DisplayNameFor(model => model.DestinationPlace)
                 </th>
                 <th class="text-right">
-                    @Html.DisplayNameFor(model => model.CarOwner.User.FirstName)
-                </th>
-                <th class="text-right">
                     @Html.DisplayNameFor(model => model.Price)
                 </th>
                 <th class="text-right">
                     @Html.DisplayNameFor(model => model.EmptySeats)
+                </th>
+                <th class="text-right">
+                    @Html.DisplayNameFor(model => model.Duration)
                 </th>
                 <th></th>
             </tr>
@@ -95,7 +92,6 @@
                 <td>
                     @Html.DisplayFor(modelItem => StartHHmm)
                 </td>
-
                 @{
                     string EndHm = item.EndTime.ToString("HH:mm");
                     string StartHm = item.StartTime.ToString("HH:mm");
@@ -118,10 +114,6 @@
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.CarOwner.User.FirstName)<span>&nbsp;</span>@Html.DisplayFor(modelItem => item.CarOwner.User.LastName)
-                </td>
-
-                <td>
                     @Html.DisplayFor(modelItem => item.Price)
                 </td>
                 <td>
@@ -130,7 +122,7 @@
                 <td>
 
 
-                    @Html.ActionLink("کنسل", "CancelReserve", new { id = item.Id })
+                    @Html.ActionLink("لیست مسافران", "PassengersList", "Rides", new { id = item.Id }) 
 
                 </td>
             </tr>
@@ -139,10 +131,4 @@
     </table>
 </div>
 
-<p>
-    @Html.ActionLink("لیست سفرهای مسافر در آینده", "FuturePassengerRides")
-</p>
-<p>
-    @Html.ActionLink("لیست سفرهای مسافر در گذشته ", "PastPassengerRides")
-</p>
 

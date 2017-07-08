@@ -1,115 +1,114 @@
 ﻿@model MyRideSharing.Models.Ride
 
 @{
-    ViewBag.Title = "Edit";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+            ViewBag.Title = "ویرایش سفر";
+            Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Edit</h2>
+<div class="info text-center">
+    <div class="info-title"><strong>ویرایش سفر</strong></div>
+    <hr>
+</div>
 
-
-@using (Html.BeginForm())
+@ViewBag.Error
+@ViewBag.Message
+@using (Html.BeginForm("Edit", "Rides", FormMethod.Post, new { @class = "form-horizontal text-center" }))
 {
     @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Ride</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        @Html.HiddenFor(model => model.Id)
+    @Html.ValidationSummary()
+    @Html.HiddenFor(model => model.Id)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SourceLatitude, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SourceLatitude, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SourceLatitude, "", new { @class = "text-danger" })
-            </div>
-        </div>
+    @Html.LabelFor(model => model.myDate)
+    @*@Html.DisplayFor(model => model.myDate)*@
+    <br />
+            @Html.EditorFor(model => model.myDate)
+            <br />
+            @Html.ValidationMessageFor(model => model.myDate)
+            <br />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SourceLongitude, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SourceLongitude, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SourceLongitude, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            <label for="Clock">ساعت حرکت</label><br />
+            <div class="input-group clockpicker">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DestinationLatitude, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DestinationLatitude, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DestinationLatitude, "", new { @class = "text-danger" })
-            </div>
-        </div>
+                @Html.EditorFor(model => model.myStartTime, new { @class = "form-control", value = "09:30" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.DestinationLongitude, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DestinationLongitude, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DestinationLongitude, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.StartTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.StartTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.StartTime, "", new { @class = "text-danger" })
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.EndTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.EndTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.EndTime, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            <br />
+            @Html.LabelFor(model => model.Duration)
+            <br />
+            @Html.EditorFor(model => model.Duration)
+            <br />
+            @Html.ValidationMessageFor(model => model.Duration)
+            <br />
+            @Html.LabelFor(model => model.EmptySeats)
+            <br />
+            @Html.EditorFor(model => model.EmptySeats)
+            <br />
+            @Html.ValidationMessageFor(model => model.EmptySeats)
+            <br />
+            @Html.LabelFor(model => model.SourcePlace)
+            <br />
+            @Html.EditorFor(model => model.SourcePlace)
+            <br />
+            @Html.ValidationMessageFor(model => model.SourcePlace)
+            <br />
+            @Html.LabelFor(model => model.DestinationPlace)
+            <br />
+            @Html.EditorFor(model => model.DestinationPlace)
+            <br />
+            @Html.ValidationMessageFor(model => model.DestinationPlace)
+            <br />
+            @Html.LabelFor(model => model.Price)
+            <br />
+            @Html.EditorFor(model => model.Price)
+            <br />
+            @Html.ValidationMessageFor(model => model.Price)
+            <br />
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
-            </div>
-        </div>
+            @Html.LabelFor(model => model.Description)
+            <br />
+            @Html.TextAreaFor(model => model.Description)
+            <br />
+            <br />
+            <button class="btn btn-default-custom" type="submit" value="ثبت سفر">ثبت سفر</button>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.SourcePlace, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SourcePlace, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SourcePlace, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.DestinationPlace, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DestinationPlace, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DestinationPlace, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("بازگشت به سفرهای راننده", "DriverRides")
 </div>
 
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
+
+
+
+@section styles{
+    <link href="~/Scripts/JsDatePicker/PersianDatePicker.min.css" rel="stylesheet" />
+    <link href="~/Scripts/JsDatePicker/clockpicker.css" rel="stylesheet" />
+
 }
+
+
+@section Scripts {
+
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/JsDatePicker/PersianDatePicker.min.js"></script>
+
+    <script src="~/Scripts/JsDatePicker/clockpicker.js"></script>
+    <script type="text/javascript">
+        $('.clockpicker').clockpicker();
+
+
+        $("#myDate").on("change", function () {
+            alert("f");
+        });
+
+    </script>
+
+}
+
+
+
+
+

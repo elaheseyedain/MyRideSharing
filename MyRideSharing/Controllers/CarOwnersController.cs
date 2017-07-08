@@ -135,6 +135,27 @@ namespace MyRideSharing.Controllers
             return View(carOwner);
         }
 
+
+        public ActionResult CarOwnerRides(int? id)//CarOwner's id to list of rides
+        {
+            User u = db.Users.Find(SessionPersister.UserId);
+            if (u == null)
+            {
+                return RedirectToAction("SignIn", "Account");
+            }
+            CarOwner co = db.CarOwners.Find(id);
+            if (co == null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            //co = db.CarOwners.Where(l => l.UserId.Equals(uid)).FirstOrDefault();
+
+            
+            var dr = db.Rides.Where(a => a.CarOwnerId == co.Id).OrderByDescending(p => p.StartTime).ToList();
+            return View(dr.ToList());
+           
+        }
+
         // GET: CarOwners/Delete/5
         public ActionResult Delete(int? id)
         {

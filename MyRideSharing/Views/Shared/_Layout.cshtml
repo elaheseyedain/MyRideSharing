@@ -44,7 +44,8 @@
     @Html.Partial("~/Views/Shared/_Header.cshtml")
     <div class="container-fluid">
         <div id="body" class="row">
-           
+           @if (Session["userId"] == null || Session["userId"].ToString() == "-1")
+           {
                 <div class="col-sm-3 col-md-2 sidebar">
                     <ul class="nav nav-sidebar">
                         <li>
@@ -54,8 +55,8 @@
                         </li>
 
                         <li>
-                            <a href="~/Account/SignUp">
-                                <span class="fa fa-briefcase" aria-hidden="true"></span><br>ثبت نام
+                            <a href="~/Rides/AvailableRides">
+                                <span class="fa fa-taxi" aria-hidden="true"></span><br>جستجوی سفرها
                             </a>
                         </li>
 
@@ -67,7 +68,56 @@
                         </li>
                     </ul>
                 </div>
-            
+
+           }
+           else
+           {
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li>
+                        <a href="~/Home/Index">
+                            <span class="fa fa-home" aria-hidden="true"></span><br>خانه
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="~/Rides/AvailableRides">
+                            <span class="fa fa-briefcase" aria-hidden="true"></span><br>سفرها
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="~/CarOwners/Create">
+                            <span class="fa fa-car" aria-hidden="true"></span><br>ثبت خودرو
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="~/Rides/PassengerRides">
+                            <span class="fa fa-taxi" aria-hidden="true"></span><br>پنل مسافر
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="~/Rides/Index">
+                            <span class="fa fa-taxi" aria-hidden="true"></span><br>همه سفرهای من
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="~/Rides/DriverRides">
+                            <span class="fa fa-taxi" aria-hidden="true"></span><br>پنل راننده
+                        </a>
+                    </li>
+                    <li>
+                        <a href="~/Rides/Create">
+                            <span class="fa fa-info-circle" aria-hidden="true"></span><br>ثبت سفر
+                        </a>
+                    </li>
+                </ul>
+            </div>
+           }
+
             @RenderSection("featured", required: false)
             <div class="main-countainer col-sm-10 col-md-11">
                 @RenderBody()
