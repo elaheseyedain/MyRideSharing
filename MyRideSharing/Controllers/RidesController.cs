@@ -317,6 +317,8 @@ namespace MyRideSharing.Controllers
         // GET: Rides/Details/5
         public ActionResult Details(int? id)
         {
+
+            ViewBag.RideId = id.ToString();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -361,7 +363,7 @@ namespace MyRideSharing.Controllers
                 s.RideId = ride.Id;
                 db.Seats.Add(s);//add the carOwner to the Seats
                 db.SaveChanges();
-                return RedirectToAction("MyRides");
+                return RedirectToAction("DriverRides");
             }
             //////
             return View(ride);
@@ -387,13 +389,23 @@ namespace MyRideSharing.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,SourceLatitude,SourceLongitude,DestinationLatitude,DestinationLongitude,StartTime,EndTime,Price,Description,SourcePlace,DestinationPlace")] Ride ride)
+        public ActionResult Edit(Ride ride)
         {
+
+            TimeSpan ts = TimeSpan.Parse(ride.myStartTime);
+            ride.StartTime = ride.myDate.Date + ts;
+            ride.EndTime = ride.StartTime;
+            ride.EndTime = ride.EndTime.AddMinutes(ride.Duration);
+            User u = new User();
+            var uid = Int32.Parse(Session["userId"].ToString());
+
+            CarOwner co = db.CarOwners.Where(l => l.UserId.Equals(uid)).FirstOrDefault();
+            ride.CarOwnerId = co.Id;
             if (ModelState.IsValid)
             {
                 db.Entry(ride).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("DriverRides");
             }
             return View(ride);
         }
@@ -501,7 +513,7 @@ namespace MyRideSharing.Controllers
                 db.Entry(r).State = EntityState.Modified;
                 db.Seats.Remove(s);//delete that row
                 db.SaveChanges();
-                return RedirectToAction("MyRides");
+                return RedirectToAction("PassengerRides");
             }
 
             return RedirectToAction("AvailableRides");

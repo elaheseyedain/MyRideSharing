@@ -1,79 +1,84 @@
 ﻿@model MyRideSharing.Models.Ride
 
+
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "جزئیات سفر";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<h2>جزئیات سفر</h2>
 
+@functions{
+    public string pdate(DayOfWeek day)
+    {
+        switch (day)
+        {
+            case DayOfWeek.Sunday:
+                return "یکشنبه";
+
+
+            case DayOfWeek.Monday:
+                return "دوشنبه";
+
+            case DayOfWeek.Tuesday:
+                return "سه‌شنبه";
+
+            case DayOfWeek.Wednesday:
+                return "چهارشنبه";
+
+            case DayOfWeek.Thursday:
+                return "پنج‌شنبه";
+
+            case DayOfWeek.Friday:
+                return "جمعه";
+
+            case DayOfWeek.Saturday:
+                return "شنبه";
+
+            default:
+                return "روز هفته";
+        }
+    }
+}
 <div>
-    <h4>Ride</h4>
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.SourceLatitude)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SourceLatitude)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.SourceLongitude)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.SourceLongitude)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DestinationLatitude)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DestinationLatitude)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DestinationLongitude)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DestinationLongitude)
-        </dd>
-
+    <dl class="main-container">
         <dt>
             @Html.DisplayNameFor(model => model.StartTime)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.StartTime)
+            @Html.DisplayFor(model => model.StartTime)<span>&nbsp;</span>
+            <span>@pdate(Model.StartTime.DayOfWeek)</span>
         </dd>
-
+        <hr />
+        @*******@
         <dt>
-            @Html.DisplayNameFor(model => model.EndTime)
+            @Html.DisplayName("ساعت")
         </dt>
+        @{string StartHHmm = Model.StartTime.ToString("HH:mm");  }
+
 
         <dd>
-            @Html.DisplayFor(model => model.EndTime)
+            @Html.DisplayFor(model => StartHHmm)
         </dd>
+        <hr />
 
         <dt>
-            @Html.DisplayNameFor(model => model.Price)
+            @Html.DisplayNameFor(model => model.Duration)
         </dt>
+        @{
+            string EndHm = Model.EndTime.ToString("HH:mm");
+            string StartHm = Model.StartTime.ToString("HH:mm");
+            TimeSpan duration = DateTime.Parse(EndHm).Subtract(DateTime.Parse(StartHm));
+            int x = (int)duration.TotalMinutes;
 
+        }
         <dd>
-            @Html.DisplayFor(model => model.Price)
+            @Html.DisplayFor(model => x)
         </dd>
+        <hr />
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.SourcePlace)
@@ -83,6 +88,9 @@
             @Html.DisplayFor(model => model.SourcePlace)
         </dd>
 
+        <hr />
+
+
         <dt>
             @Html.DisplayNameFor(model => model.DestinationPlace)
         </dt>
@@ -90,10 +98,130 @@
         <dd>
             @Html.DisplayFor(model => model.DestinationPlace)
         </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.User.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.User.FirstName)<span>&nbsp;</span>@Html.DisplayFor(model => model.CarOwner.User.LastName)
+
+        </dd>
+        <hr />
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.CarName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.CarName)
+        </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.CarProdYear)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.CarProdYear)
+        </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.CarColor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.CarColor)
+        </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.CarPlate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.CarPlate)
+        </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.LicenseNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.LicenseNumber)
+        </dd>
+        <hr />
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.User.Gender1.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.User.Gender1.Title)
+        </dd>
+        <hr />
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.User.StudentId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.User.StudentId)
+        </dd>
+
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.User.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.User.Phone)
+        </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.User.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.User.Email)
+        </dd>
+        <hr />
+
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CarOwner.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CarOwner.Description)
+        </dd>
+        <hr />
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+        <hr />
 
     </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+
+        <div class="form-actions no-color">
+            
+            
+            @Html.ActionLink("رزرو", "Reserve", new { id = Model.Id })
+
+
+        </div>
+    
