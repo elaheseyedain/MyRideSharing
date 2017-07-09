@@ -42,7 +42,7 @@
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CarOwnerId" Type="int" Nullable="false" />
           <Property Name="UserId" Type="int" Nullable="false" />
-          <Property Name="Rating" Type="char" MaxLength="1" Nullable="false" />
+          <Property Name="Rate" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Rides">
           <Key>
@@ -279,7 +279,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CarOwnerId" Type="Int32" Nullable="false" />
           <Property Name="UserId" Type="Int32" Nullable="false" />
-          <Property Name="Rating1" Type="String" MaxLength="1" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="Rate" Type="Int32" Nullable="false" />
           <NavigationProperty Name="CarOwner" Relationship="Self.FK_Ratings_CarOwners" FromRole="Ratings" ToRole="CarOwners" />
         </EntityType>
         <EntityType Name="Ride">
@@ -523,7 +523,7 @@
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="CarOwnerId" ColumnName="CarOwnerId" />
                 <ScalarProperty Name="UserId" ColumnName="UserId" />
-                <ScalarProperty Name="Rating1" ColumnName="Rating" />
+                <ScalarProperty Name="Rate" ColumnName="Rate" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

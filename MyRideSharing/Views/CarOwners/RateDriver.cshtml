@@ -1,14 +1,21 @@
 ﻿@model MyRideSharing.Models.CarOwner
 
 @{
-    ViewBag.Title = "جزئیات راننده";
+    ViewBag.Title = "امتیازدهی به راننده";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>راننده</h2>
-<hr />
+<div class="info text-center">
+    <div class="info-title"><strong>امتیازدهی به راننده</strong></div>
+    <hr>
+</div>
+
+@ViewBag.Error
+
+<hr/>
 
 <div>
+    <hr />
     <dl class="main-container">
 
         <dt>
@@ -20,16 +27,8 @@
 
         </dd>
         <hr />
-        @*
-    <dt>
-        @Html.DisplayName("میانگین امتیاز")
-    </dt>
 
-    <dd>
-        @ViewBag.Rate
-    </dd>
-    <hr />
-        *@
+
         <dt>
             @Html.DisplayNameFor(model => model.CarName)
         </dt>
@@ -125,18 +124,32 @@
         <hr />
 
     </dl>
+
+    @using (Html.BeginForm("RateDriver", "CarOwners", FormMethod.Post, new { @class = "form-horizontal text-center" }))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.DisplayName("امتیاز")
+        <br/>
+
+        <span class="fa fa-star" aria-hidden="true">
+        </span>
+        <input type="number" name="rate" id="rate" placeholder="امتیاز" maxlength = "1" onkeyup = "this.value = this.value.replace(/[^0-5]/, '')" />
+        <br/>
+        <div class="form-actions no-color">
+            <input type="submit" value="ثبت امتیاز" class="btn btn-default" /> |
+            @Html.ActionLink("لیست راننده ها", "Index")
+        </div>
+    }
 </div>
 
 
+    @*<button class="btn btn-default-custom" type="submit" value="ثبت سفر">ثبت سفر</button>*@
 
 
+@section Scripts {
 
+    @Scripts.Render("~/bundles/jqueryval")
 
-    <p>
-        @Html.ActionLink("امتیازدهی به راننده", "RateDriver", new { id = Model.Id }) |
-        @Html.ActionLink("سفرهای این راننده", "CarOwnerRides", new { id = Model.Id }) |
-        @Html.ActionLink("بازگشت به لیست رانندگان", "Index")
-    </p>
-
-
+}
 

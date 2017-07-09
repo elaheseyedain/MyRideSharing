@@ -21,6 +21,7 @@ namespace MyRideSharing.Models
             this.Seats = new HashSet<Seat>();
         }
 
+
         public int Id { get; set; }
         public Nullable<decimal> SourceLatitude { get; set; }
         public Nullable<decimal> SourceLongitude { get; set; }
@@ -64,14 +65,10 @@ namespace MyRideSharing.Models
 
         [Display(Name = "تعداد صندلی های قابل استفاده")]
         public short EmptySeats { get; set; }
-
         public int CarOwnerId { get; set; }
-
+    
         public virtual CarOwner CarOwner { get; set; }
-        
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Seat> Seats { get; set; }
     }
 }
-
-

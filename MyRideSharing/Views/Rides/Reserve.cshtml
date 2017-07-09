@@ -7,7 +7,9 @@
 }
 
 <h2>رزرو صندلی</h2>
-@ViewBag.Error
+<hr />
+<b style="color:red;">@ViewBag.Error</b>
+<hr />
 
 @functions{
     public string pdate(DayOfWeek day)
@@ -228,3 +230,37 @@
         </div>
     }
 </div>
+
+
+<h3>لیست مسافران</h3>
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th class="text-right">
+                    @Html.DisplayName("نام")
+                </th>
+                <th class="text-right">
+                    @Html.DisplayName(" جنسیت")
+                </th>
+            </tr>
+        </thead>
+
+        @foreach (MyRideSharing.Models.Seat s in ViewBag.Passengers)
+            {
+            <tr>
+
+                <td>
+                    @Html.DisplayFor(modelItem => s.User.FirstName)<span>&nbsp;</span>@Html.DisplayFor(modelItem => s.User.LastName)
+
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => s.User.Gender1.Title)
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+
+
+

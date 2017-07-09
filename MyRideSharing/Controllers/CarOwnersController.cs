@@ -139,11 +139,14 @@ namespace MyRideSharing.Controllers
         public ActionResult CarOwnerRides(int? id)//CarOwner's id to list of rides
         {
             User u = db.Users.Find(SessionPersister.UserId);
+            
             if (u == null)
             {
                 return RedirectToAction("SignIn", "Account");
             }
             CarOwner co = db.CarOwners.Find(id);
+            ViewBag.Name = co.User.FirstName + " " + co.User.LastName;
+            ViewBag.CarOwnerId = co.Id;
             if (co == null)
             {
                 return RedirectToAction("Index", "Home");
@@ -154,6 +157,87 @@ namespace MyRideSharing.Controllers
             var dr = db.Rides.Where(a => a.CarOwnerId == co.Id).OrderByDescending(p => p.StartTime).ToList();
             return View(dr.ToList());
            
+        }
+
+
+        // GET: CarOwners/Delete/5
+        public ActionResult RateDriver(int? id)
+        {
+
+            User u = db.Users.Find(SessionPersister.UserId);
+            if (u == null)
+            {
+                return RedirectToAction("SignIn", "Account");
+            }
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            CarOwner carOwner = db.CarOwners.Find(id);
+            if (carOwner == null)
+            {
+                return HttpNotFound();
+            }
+
+            if(carOwner.UserId == u.Id)
+            {
+                ViewBag.Error = "شما نمی توانید به خودتان امتیاز دهید";
+                return View(carOwner);
+            }
+
+            var alreadyRated = db.Ratings.Any(p => (p.UserId == u.Id) && (p.CarOwnerId == carOwner.Id));
+            if (alreadyRated)
+            {
+                ViewBag.Error = "شما نمی توانید دوباره به این راننده امتیاز دهید ";
+                return View(carOwner);
+            }
+            return View(carOwner);
+        }
+
+        // POST: CarOwners/Delete/5
+        [HttpPost, ActionName("RateDriver")]
+        [ValidateAntiForgeryToken]
+        public ActionResult RateDriverConfirmed(int id, string rate)
+        {
+
+            User u = db.Users.Find(SessionPersister.UserId);
+            CarOwner carOwner = db.CarOwners.Find(id);
+            if (u == null)
+            {
+                return RedirectToAction("SignIn", "Account");
+            }
+            if (carOwner.UserId == u.Id)
+            {
+                ViewBag.Error = "شما نمی توانید به خودتان امتیاز دهید";
+                return View(carOwner);
+            }
+
+            var alreadyRated = db.Ratings.Any(p => (p.UserId == u.Id) && (p.CarOwnerId == carOwner.Id));
+            if (alreadyRated)
+            {
+
+                Rating ar = db.Ratings.Where(a => (a.UserId == u.Id) && (a.CarOwnerId == carOwner.Id)).FirstOrDefault();
+                ar.Rate = int.Parse(rate);
+                db.Entry(ar).State = EntityState.Modified;
+                db.SaveChanges();
+                //ViewBag.Error = "شما نمی توانید دوباره به این راننده امتیاز دهید ";
+                return RedirectToAction("Index", "CarOwners");
+            }
+
+            Rating r = new Rating();
+            r.CarOwnerId = carOwner.Id;
+            r.UserId = u.Id;
+            r.Rate = int.Parse(rate);
+
+
+            //if (ModelState.IsValid)
+            //{
+                db.Ratings.Add(r);
+                db.SaveChanges();
+                return RedirectToAction("Index", "CarOwners");
+            //}
+
+            
         }
 
         // GET: CarOwners/Delete/5

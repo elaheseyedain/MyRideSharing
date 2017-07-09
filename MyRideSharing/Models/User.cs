@@ -24,6 +24,7 @@ namespace MyRideSharing.Models
             this.Seats = new HashSet<Seat>();
         }
 
+
         public int Id { get; set; }
 
         [StringLength(8, ErrorMessage = "شماره دانشجویی باید 8 کاراکتری باشد", MinimumLength = 8)]

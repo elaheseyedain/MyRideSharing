@@ -167,7 +167,9 @@
                 </td>
 
                 <td>
-                    @Html.DisplayFor(modelItem => item.CarOwner.User.FirstName)<span>&nbsp;</span>@Html.DisplayFor(modelItem => item.CarOwner.User.LastName)
+                    <a href="@Url.Action("Details", "CarOwners", new { id = item.CarOwner.Id })">
+                        @Html.DisplayFor(modelItem => item.CarOwner.User.FirstName)<span>&nbsp;</span>@Html.DisplayFor(modelItem => item.CarOwner.User.LastName)
+                    </a>
                 </td>
 
                 <td>

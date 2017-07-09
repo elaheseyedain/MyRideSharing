@@ -8,6 +8,7 @@
 
 <h2>جزئیات سفر</h2>
 
+<hr />
 @functions{
     public string pdate(DayOfWeek day)
     {
@@ -41,7 +42,6 @@
     }
 }
 <div>
-    <hr />
     <dl class="main-container">
         <dt>
             @Html.DisplayNameFor(model => model.StartTime)
@@ -218,11 +218,7 @@
 
 
         <div class="form-actions no-color">
-            
-            
             @Html.ActionLink("رزرو", "Reserve", new { id = Model.Id })
-
-
         </div>
 
 
@@ -258,7 +254,7 @@
         </table>
     </div>
 
-
+</div>
 
 
 

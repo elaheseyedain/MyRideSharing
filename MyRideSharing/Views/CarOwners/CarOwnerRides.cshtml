@@ -4,11 +4,9 @@
     ViewBag.Title = "سفرهای این راننده";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-
 <hr />
 <br />
-<h3>سفرهای @Html.DisplayNameFor(model => model.CarOwner.User.LastName) به عنوان راننده</h3>
+<h3>سفرهای <a href = @Url.Action("Details", "CarOwners", new { id = ViewBag.CarOwnerId })> @ViewBag.Name </a> به عنوان راننده</h3>
 <br />
 <div class="table-responsive">
     <table class="table table-striped">
@@ -38,9 +36,6 @@
                 </th>
                 <th class="text-right">
                     @Html.DisplayNameFor(model => model.EmptySeats)
-                </th>
-                <th class="text-right">
-                    @Html.DisplayNameFor(model => model.Duration)
                 </th>
                 <th></th>
             </tr>
@@ -120,9 +115,10 @@
                     @Html.DisplayFor(modelItem => item.EmptySeats)
                 </td>
                 <td>
-
-
-                    @Html.ActionLink("لیست مسافران", "PassengersList", "Rides", new { id = item.Id }) 
+                    @Html.ActionLink("رزرو", "Reserve", "Rides", new { id = item.Id }, null)  <span> |</span>
+                    @Html.ActionLink("کنسل", "CancelReserve", "Rides", new { id = item.Id }, null)  <span> |</span>
+                    @Html.ActionLink("جزئیات سفر", "Details", "Rides", new { id = item.Id }, null)  <span> |</span>
+                    @Html.ActionLink("لیست مسافران", "PassengersList", "Rides", new { id = item.Id }, null)
 
                 </td>
             </tr>

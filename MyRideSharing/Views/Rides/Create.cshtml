@@ -75,22 +75,6 @@
 
 
 
-@*@Html.LabelFor(model => model.ServiceId)
-    <br />
-    <select name="ServiceId" id="ServiceId">
-        @foreach (Appointer.Models.Service s in ViewBag.Services)
-        {
-            <option value="@s.Id">@s.Title @Html.Raw(" - ") @s.Duration @Html.Raw(" دقیقه")</option>
-        }
-    </select>
-    <br />*@
-
-
-
-
-
-
-
 @section styles{
     <link href="~/Scripts/JsDatePicker/PersianDatePicker.min.css" rel="stylesheet" />
     <link href="~/Scripts/JsDatePicker/clockpicker.css" rel="stylesheet" />
@@ -111,33 +95,7 @@
             $("#myDate").on("change",function () {
                 alert("f");
             });
-            @*$(document).ready(function () {
-                var url = '@Url.Action("ReserveJsonInfo")'; // add controller name is necessary
-                $('#myDate').on("input", function () {
-                    $.getJSON(url, { wtdate: $('#selDate').val() }, function (response) {
-                        //alert(response);
-                        if (response == false) {
 
-                            $(".ajaxRes").html("<span style='color: red;'>چنین زمان کاری ای وجود ندارد</span>");
-
-                        }
-                        else {
-                            alert(response.wt.length);
-
-                            //$(".ajaxRes").html(response.dow + "<span> از </span>" + response.StartTime + "<span> تا </span>" + response.EndTime + "<br/>" + response.JobTitle + "<br/>" + response.JobCorp);
-                            //if (response.ap.length > 0) {
-                            //    $(".ajaxRes").append("<hr><span style='color:blue;'>دیگر قرارهای این روز</span><br/>");
-                            //}
-                            //for (var j = 0; j < response.ap.length ; j++) {
-                            //    $(".ajaxRes").append(response.ap[j].StartHour + " تا " + response.ap[j].EndHour + "<br/>");
-                            //}
-                        }
-                    });
-                });
-            });*@
-            //$(document).ready(function () {
-            //    $('#selDate').change(function () { alert("ea"); });
-            //});
     </script>
 
 }
