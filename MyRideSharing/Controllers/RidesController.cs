@@ -318,6 +318,8 @@ namespace MyRideSharing.Controllers
         public ActionResult Details(int? id)
         {
 
+
+            ViewBag.Passengers = db.Seats.Where(acc => (acc.RideId == id)).ToList();
             ViewBag.RideId = id.ToString();
             if (id == null)
             {
@@ -443,12 +445,22 @@ namespace MyRideSharing.Controllers
             {
                 return HttpNotFound();
             }
+            //if she already has a reservation
 
-            if (ride.CarOwner.UserId == u.Id)
+            var alreadyReserved = db.Seats.Any(p => (p.UserId == u.Id) && (p.RideId == ride.Id));
+            if (alreadyReserved)
             {
-                ViewBag.Error = "شما نمی توانید در سفر خود صندلی رزرو کنید ";
-                return RedirectToAction("Index");
+                ViewBag.Error = "شما قبلا این سفر را انتخاب کرده اید و نمی توانید دوباره انتخابش کنید ";
+                //return RedirectToAction("Index");
+                return View(ride);
             }
+
+            //if (ride.CarOwner.UserId == u.Id)
+            //{
+            //    ViewBag.Error = "شما نمی توانید در سفر خود صندلی رزرو کنید ";
+            //    //return RedirectToAction("Index");
+            //    return View(ride);
+            //}
             return View(ride);
         }
 
@@ -463,10 +475,12 @@ namespace MyRideSharing.Controllers
             s.UserId = u.Id;
             r.EmptySeats -= 1;
 
-            if (r.CarOwner.UserId == u.Id)
+            var alreadyReserved = db.Seats.Any(p => (p.UserId == u.Id) && (p.RideId == r.Id));
+            if (alreadyReserved)
             {
-                ViewBag.Error = "شما نمی توانید در سفر خود صندلی رزرو کنید ";
-                return RedirectToAction("Index");
+                ViewBag.Error = "شما قبلا این سفر را انتخاب کرده اید و نمی توانید دوباره انتخابش کنید ";
+                //return RedirectToAction("Index");
+                return View(r);
             }
             if (ModelState.IsValid)
             {
