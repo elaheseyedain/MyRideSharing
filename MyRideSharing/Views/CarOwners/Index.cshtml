@@ -8,14 +8,10 @@
 
 <hr />
 <br />
-<h3>سفرهای من </h3>
+<h3>لیست راننده ها </h3>
 <br />
 @ViewBag.Error
 
-
-<p>
-    @Html.ActionLink("ایجاد سفر", "Create")
-</p>
 
 
 <div class="table-responsive">
@@ -26,6 +22,7 @@
                 <th class="text-right">
                     @Html.DisplayNameFor(model => model.User.FirstName)
                 </th>
+
                 <th class="text-right">
                     @Html.DisplayNameFor(model => model.CarPlate)
                 </th>
@@ -51,6 +48,7 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.User.FirstName)<span>&nbsp;</span>@Html.DisplayFor(modelItem => item.User.LastName)
                 </td>
+
                 <td>
                     @Html.DisplayFor(modelItem => item.CarPlate)
                 </td>

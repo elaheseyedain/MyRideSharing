@@ -39,11 +39,11 @@ namespace MyRideSharing.Models
         [Display(Name = "زمان حرکت")]
         public String myStartTime { get; set; }
 
-        [Display(Name = "زمان رسیدن به مقصد")]
+        [Display(Name = "زمان رسیدن")]
         public String myEndTime { get; set; }
 
 
-        [Display(Name = "مدت زمان تخمینی رسیدن به مقصد به دقیقه")]
+        [Display(Name = "تخمین مدت")]
         public int Duration { get; set; }
 
         [UIHint("DateTime")]
@@ -63,10 +63,10 @@ namespace MyRideSharing.Models
         [Display(Name = "مقصد")]
         public string DestinationPlace { get; set; }
 
-        [Display(Name = "تعداد صندلی های قابل استفاده")]
+        [Display(Name = "تعداد صندلی")]
         public short EmptySeats { get; set; }
         public int CarOwnerId { get; set; }
-    
+
         public virtual CarOwner CarOwner { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Seat> Seats { get; set; }

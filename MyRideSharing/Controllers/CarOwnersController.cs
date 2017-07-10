@@ -30,25 +30,13 @@ namespace MyRideSharing.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             CarOwner carOwner = db.CarOwners.Find(id);
-            //var avgRate = db.Ratings
-            //      .Where(c => c.CarOwnerId == id)
-            //      .GroupBy(g => g.CarOwnerId, c => c.Rate)
-            //      .Select(g => new
-            //      {
-            //          Average = g.Average()
-            //      });
             double avg = 0;
             var hasAverage = db.Ratings.Any(p => p.CarOwnerId == carOwner.Id);
             if (hasAverage)
             {
                 avg = db.Ratings.Where(x => x.CarOwnerId == carOwner.Id).Average(z => z.Rate);
             }
-
-            //var RateQuery =
-            //    from Seat in db.Seats
-            //    join Ride in db.Rides on Seat.RideId equals Ride.Id
-            //    where Seat.UserId == u.Id && Ride.StartTime >= DateTime.Now
-            //    select Ride;
+            
             ViewBag.Rate = avg.ToString();
             if (carOwner == null)
             {

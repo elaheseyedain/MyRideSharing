@@ -44,14 +44,14 @@
 
     @Html.LabelFor(model => model.CarProdYear)
     <br />
-    @Html.EditorFor(model => model.CarProdYear)
+    @Html.EditorFor(model => model.CarProdYear, new { maxlength = "2", onkeyup = "this.value = this.value.replace(/[^0-9]/, '')" })
+
     <br />
     @Html.ValidationMessageFor(model => model.CarProdYear)
     <br />
-
     @Html.LabelFor(model => model.LicenseNumber)
     <br />
-    @Html.EditorFor(model => model.LicenseNumber)
+    @Html.EditorFor(model => model.LicenseNumber, new { maxlength = "10", onkeyup = "this.value = this.value.replace(/[^0-9]/, '')" })
     <br />
     @Html.ValidationMessageFor(model => model.LicenseNumber)
     <br />

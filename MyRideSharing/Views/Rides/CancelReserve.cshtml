@@ -108,7 +108,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CarOwner.User.FirstName)<span>&nbsp;</span>@Html.DisplayFor(model => model.CarOwner.User.LastName)
+            <a href=@Url.Action("Details", "CarOwners", new { id = Model.CarOwnerId })> @Html.DisplayFor(model => model.CarOwner.User.FirstName)<span>&nbsp;</span>@Html.DisplayFor(model => model.CarOwner.User.LastName) </a>
 
         </dd>
         <hr />
