@@ -30,6 +30,26 @@ namespace MyRideSharing.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             CarOwner carOwner = db.CarOwners.Find(id);
+            //var avgRate = db.Ratings
+            //      .Where(c => c.CarOwnerId == id)
+            //      .GroupBy(g => g.CarOwnerId, c => c.Rate)
+            //      .Select(g => new
+            //      {
+            //          Average = g.Average()
+            //      });
+            double avg = 0;
+            var hasAverage = db.Ratings.Any(p => p.CarOwnerId == carOwner.Id);
+            if (hasAverage)
+            {
+                avg = db.Ratings.Where(x => x.CarOwnerId == carOwner.Id).Average(z => z.Rate);
+            }
+
+            //var RateQuery =
+            //    from Seat in db.Seats
+            //    join Ride in db.Rides on Seat.RideId equals Ride.Id
+            //    where Seat.UserId == u.Id && Ride.StartTime >= DateTime.Now
+            //    select Ride;
+            ViewBag.Rate = avg.ToString();
             if (carOwner == null)
             {
                 return HttpNotFound();
@@ -49,9 +69,8 @@ namespace MyRideSharing.Controllers
                 ViewBag.UserId = new SelectList(db.Users, "Id", "StudentId");
                 return View();
             }
-            else
+            else //if user alreay defined a car
             {
-
                 return RedirectToAction("Edit");
             }
 
@@ -81,30 +100,14 @@ namespace MyRideSharing.Controllers
             return View(carOwner);
         }
 
-//                {
-//            JobCorp jc = new JobCorp();
-//        var u = Int32.Parse(Session["userId"].ToString());
-//        jc = db.JobCorps.Where(acc => acc.UserId.Equals(u)).FirstOrDefault();
-//        service.JobCorpId = jc.Id;
-//            if (ModelState.IsValid)
-//            {
-//                db.Services.Add(service);
-//                db.SaveChanges();
-//                return RedirectToAction("Index");
-//    }
-
-            
-//            return View(service);
-//}
-
-// GET: CarOwners/Edit/5
+        // GET: CarOwners/Edit/5
         public ActionResult Edit()
         {
 
             CarOwner co = new CarOwner();
             var uid = Int32.Parse(Session["userId"].ToString());
             co = db.CarOwners.Where(acc => acc.UserId.Equals(uid)).FirstOrDefault();
-            
+
 
 
             if (co == null)
@@ -123,7 +126,7 @@ namespace MyRideSharing.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Edit(CarOwner carOwner)
         {
-            
+
             carOwner.UserId = Int32.Parse(SessionPersister.UserId.ToString());
             if (ModelState.IsValid)
             {
@@ -139,7 +142,7 @@ namespace MyRideSharing.Controllers
         public ActionResult CarOwnerRides(int? id)//CarOwner's id to list of rides
         {
             User u = db.Users.Find(SessionPersister.UserId);
-            
+
             if (u == null)
             {
                 return RedirectToAction("SignIn", "Account");
@@ -153,10 +156,10 @@ namespace MyRideSharing.Controllers
             }
             //co = db.CarOwners.Where(l => l.UserId.Equals(uid)).FirstOrDefault();
 
-            
+
             var dr = db.Rides.Where(a => a.CarOwnerId == co.Id).OrderByDescending(p => p.StartTime).ToList();
             return View(dr.ToList());
-           
+
         }
 
 
@@ -179,18 +182,18 @@ namespace MyRideSharing.Controllers
                 return HttpNotFound();
             }
 
-            if(carOwner.UserId == u.Id)
+            if (carOwner.UserId == u.Id)
             {
                 ViewBag.Error = "شما نمی توانید به خودتان امتیاز دهید";
                 return View(carOwner);
             }
 
-            var alreadyRated = db.Ratings.Any(p => (p.UserId == u.Id) && (p.CarOwnerId == carOwner.Id));
-            if (alreadyRated)
-            {
-                ViewBag.Error = "شما نمی توانید دوباره به این راننده امتیاز دهید ";
-                return View(carOwner);
-            }
+            //var alreadyRated = db.Ratings.Any(p => (p.UserId == u.Id) && (p.CarOwnerId == carOwner.Id));
+            //if (alreadyRated)
+            //{
+            //    ViewBag.Error = "شما نمی توانید دوباره به این راننده امتیاز دهید ";
+            //    return View(carOwner);
+            //}
             return View(carOwner);
         }
 
@@ -199,7 +202,6 @@ namespace MyRideSharing.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult RateDriverConfirmed(int id, string rate)
         {
-
             User u = db.Users.Find(SessionPersister.UserId);
             CarOwner carOwner = db.CarOwners.Find(id);
             if (u == null)
@@ -213,6 +215,13 @@ namespace MyRideSharing.Controllers
             }
 
             var alreadyRated = db.Ratings.Any(p => (p.UserId == u.Id) && (p.CarOwnerId == carOwner.Id));
+
+            if (int.Parse(rate) <= 0 || int.Parse(rate) > 5)
+            {
+
+                ViewBag.Error = "امتیاز شما باید عددی صحیح بین 1 تا 5 باشد";
+                return View(carOwner);
+            }
             if (alreadyRated)
             {
 
@@ -228,16 +237,12 @@ namespace MyRideSharing.Controllers
             r.CarOwnerId = carOwner.Id;
             r.UserId = u.Id;
             r.Rate = int.Parse(rate);
-
-
             //if (ModelState.IsValid)
             //{
-                db.Ratings.Add(r);
-                db.SaveChanges();
-                return RedirectToAction("Index", "CarOwners");
+            db.Ratings.Add(r);
+            db.SaveChanges();
+            return RedirectToAction("Index", "CarOwners");
             //}
-
-            
         }
 
         // GET: CarOwners/Delete/5
@@ -247,7 +252,14 @@ namespace MyRideSharing.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            User u = db.Users.Find(SessionPersister.UserId);
             CarOwner carOwner = db.CarOwners.Find(id);
+            CarOwner co = db.CarOwners.Where(l => l.UserId.Equals(u.Id)).FirstOrDefault();
+            if (co == null)
+            {
+                ViewBag.Error = "شما قادر به حذف ماشین کس دیگر نیستید";
+                return RedirectToAction("Create", "CarOwners");
+            }
             if (carOwner == null)
             {
                 return HttpNotFound();
@@ -261,6 +273,13 @@ namespace MyRideSharing.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             CarOwner carOwner = db.CarOwners.Find(id);
+            User u = db.Users.Find(SessionPersister.UserId);
+            CarOwner co = db.CarOwners.Where(l => l.UserId.Equals(u.Id)).FirstOrDefault();
+            if (co == null)
+            {
+                ViewBag.Error = "شما قادر به حذف ماشین کس دیگر نیستید";
+                return RedirectToAction("Create", "CarOwners");
+            }
             db.CarOwners.Remove(carOwner);
             db.SaveChanges();
             return RedirectToAction("Index", "Home");

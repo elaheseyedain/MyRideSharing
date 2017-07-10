@@ -330,6 +330,19 @@ namespace MyRideSharing.Controllers
         // GET: Rides/Create
         public ActionResult Create()
         {
+            User u = db.Users.Find(SessionPersister.UserId);
+            if (u == null)
+            {
+                return RedirectToAction("SignIn", "Account");
+            }
+
+
+            CarOwner carOwner = db.CarOwners.Where(p => p.UserId == u.Id).FirstOrDefault();
+            if (carOwner == null)
+            {
+                ViewBag.Error = "ابتدا باید ماشین خود را تعریف کنید";
+                return RedirectToAction("Create", "CarOwners");
+            }
             return View();
         }
 
@@ -351,6 +364,11 @@ namespace MyRideSharing.Controllers
             ride.EndTime = ride.StartTime;
             ride.EndTime = ride.EndTime.AddMinutes(ride.Duration);
             CarOwner co = db.CarOwners.Where(l => l.UserId.Equals(u.Id)).FirstOrDefault();
+            if (co == null)
+            {
+                ViewBag.Error = "ابتدا باید ماشین خود را تعریف کنید";
+                return RedirectToAction("Create", "CarOwners");
+            }
             ride.CarOwnerId = co.Id;
             if (ModelState.IsValid)
             {
@@ -379,6 +397,12 @@ namespace MyRideSharing.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            CarOwner co = db.CarOwners.Where(l => l.UserId.Equals(u.Id)).FirstOrDefault();
+            if (co == null)
+            {
+                ViewBag.Error = "ابتدا باید ماشین خود را تعریف کنید";
+                return RedirectToAction("Create", "CarOwners");
+            }
             Ride ride = db.Rides.Find(id);
             if (ride == null)
             {
@@ -404,6 +428,11 @@ namespace MyRideSharing.Controllers
             ride.EndTime = ride.StartTime;
             ride.EndTime = ride.EndTime.AddMinutes(ride.Duration);
             CarOwner co = db.CarOwners.Where(l => l.UserId.Equals(u.Id)).FirstOrDefault();
+            if (co == null)
+            {
+                ViewBag.Error = "ابتدا باید ماشین خود را تعریف کنید";
+                return RedirectToAction("Create", "CarOwners");
+            }
             ride.CarOwnerId = co.Id;
             if (ModelState.IsValid)
             {
@@ -605,7 +634,12 @@ namespace MyRideSharing.Controllers
             }
             Ride r = db.Rides.Find(id);
             ViewBag.Passengers = db.Seats.Where(acc => (acc.RideId == id)).ToList();
-
+            CarOwner co = db.CarOwners.Where(l => l.UserId.Equals(u.Id)).FirstOrDefault();
+            if (co == null)
+            {
+                ViewBag.Error = "ابتدا باید ماشین خود را تعریف کنید";
+                return RedirectToAction("Create", "CarOwners");
+            }
 
             if (id == null)
             {
@@ -631,7 +665,12 @@ namespace MyRideSharing.Controllers
             }
             Ride r = db.Rides.Find(id);
             var DeleteSeats = new List<Seat>();
-
+            CarOwner co = db.CarOwners.Where(l => l.UserId.Equals(u.Id)).FirstOrDefault();
+            if (co == null)
+            {
+                ViewBag.Error = "ابتدا باید ماشین خود را تعریف کنید";
+                return RedirectToAction("Create", "CarOwners");
+            }
             DeleteSeats = db.Seats.Where(a => a.RideId == id).ToList();
             db.Seats.RemoveRange(DeleteSeats);
 
