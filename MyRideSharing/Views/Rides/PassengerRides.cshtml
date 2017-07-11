@@ -129,9 +129,14 @@
                 </td>
                 <td>
 
+                    @if (item.StartTime >= DateTime.Now)
+                    {
+                        @Html.ActionLink("کنسل", "CancelReserve", new { id = item.Id }) <span> |</span>
+                    }
 
-                    @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) <span> |</span>
-                    @Html.ActionLink("کنسل", "CancelReserve", new { id = item.Id })
+                    @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) 
+
+                    
 
                 </td>
             </tr>

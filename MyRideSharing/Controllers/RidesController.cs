@@ -408,6 +408,11 @@ namespace MyRideSharing.Controllers
             {
                 return HttpNotFound();
             }
+            if (ride.StartTime < DateTime.Now)
+            {
+                ViewBag.Error = "باید زمان برای آینده باشد تا بتوانید سفر را ویرایش کنید";
+                return View(ride);
+            }
             return View(ride);
         }
 
@@ -439,6 +444,11 @@ namespace MyRideSharing.Controllers
                 db.Entry(ride).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("DriverRides");
+            }
+            if (ride.StartTime < DateTime.Now)
+            {
+                ViewBag.Error = "باید زمان برای آینده باشد تا بتوانید سفر را ویرایش کنید";
+                return View(ride);
             }
             return View(ride);
         }
@@ -491,6 +501,13 @@ namespace MyRideSharing.Controllers
                 //return RedirectToAction("Index");
                 return View(ride);
             }
+            if (ride.StartTime < DateTime.Now)
+            {
+
+                ViewBag.Passengers = db.Seats.Where(acc => (acc.RideId == id)).ToList();
+                ViewBag.Error = "باید سفری که رزرو می کنید برای آینده باشد! ";
+                return View(ride);
+            }
             if (ride.EmptySeats <= 0)
             {
 
@@ -526,6 +543,13 @@ namespace MyRideSharing.Controllers
                 ViewBag.Passengers = db.Seats.Where(acc => (acc.RideId == id)).ToList();
                 ViewBag.Error = "شما قبلا این سفر را انتخاب کرده اید و نمی توانید دوباره انتخابش کنید ";
                 //return RedirectToAction("Index");
+                return View(r);
+            }
+            if (r.StartTime < DateTime.Now)
+            {
+
+                ViewBag.Passengers = db.Seats.Where(acc => (acc.RideId == id)).ToList();
+                ViewBag.Error = "باید سفری که رزرو می کنید برای آینده باشد! ";
                 return View(r);
             }
             if (r.EmptySeats <= 0)
@@ -575,6 +599,13 @@ namespace MyRideSharing.Controllers
 
                 return View(ride);
             }
+            if (ride.StartTime < DateTime.Now)
+            {
+
+                ViewBag.Passengers = db.Seats.Where(acc => (acc.RideId == id)).ToList();
+                ViewBag.Error = "باید سفری که کنسل می کنید برای آینده باشد! ";
+                return View(ride);
+            }
             else
             {
 
@@ -595,7 +626,13 @@ namespace MyRideSharing.Controllers
             //s.RideId = r.Id;
             //s.UserId = u.Id;
             r.EmptySeats += 1;
+            if (r.StartTime < DateTime.Now)
+            {
 
+                ViewBag.Passengers = db.Seats.Where(acc => (acc.RideId == id)).ToList();
+                ViewBag.Error = "باید سفری که کنسل می کنید برای آینده باشد! ";
+                return View(r);
+            }
             var Reserved = db.Seats.Any(p => (p.UserId == u.Id) && (p.RideId == r.Id));
             if (Reserved)
             {
@@ -640,7 +677,13 @@ namespace MyRideSharing.Controllers
                 ViewBag.Error = "ابتدا باید ماشین خود را تعریف کنید";
                 return RedirectToAction("Create", "CarOwners");
             }
+            if (r.StartTime < DateTime.Now)
+            {
 
+                ViewBag.Passengers = db.Seats.Where(acc => (acc.RideId == id)).ToList();
+                ViewBag.Error = "باید سفری که کنسل می کنید برای آینده باشد! ";
+                return View(r);
+            }
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -670,6 +713,13 @@ namespace MyRideSharing.Controllers
             {
                 ViewBag.Error = "ابتدا باید ماشین خود را تعریف کنید";
                 return RedirectToAction("Create", "CarOwners");
+            }
+            if (r.StartTime < DateTime.Now)
+            {
+
+                ViewBag.Passengers = db.Seats.Where(acc => (acc.RideId == id)).ToList();
+                ViewBag.Error = "باید سفری که کنسل می کنید برای آینده باشد! ";
+                return View(r);
             }
             DeleteSeats = db.Seats.Where(a => a.RideId == id).ToList();
             db.Seats.RemoveRange(DeleteSeats);

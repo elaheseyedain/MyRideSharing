@@ -119,10 +119,15 @@
                 <td>
 
 
-                    @Html.ActionLink("ویرایش", "Edit", new { id = item.Id })  <span> |</span>
+
+                    @if (item.StartTime >= DateTime.Now)
+                    {
+                        @Html.ActionLink("ویرایش", "Edit", new { id = item.Id })  <span> |</span>
+                        @Html.ActionLink("کنسل", "Delete", new { id = item.Id })  <span> |</span>
+                    }
+
                     @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) <span> |</span>
-                    @Html.ActionLink("لیست مسافران", "PassengersList", new { id = item.Id }) <span> |</span>
-                    @Html.ActionLink("کنسل", "Delete", new { id = item.Id })
+                    @Html.ActionLink("لیست مسافران", "PassengersList", new { id = item.Id })
 
                 </td>
             </tr>

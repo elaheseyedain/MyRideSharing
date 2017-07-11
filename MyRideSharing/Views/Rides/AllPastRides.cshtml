@@ -127,6 +127,10 @@
                 <td>
                     @Html.DisplayFor(modelItem => item.EmptySeats)
                 </td>
+                <td>
+
+                    @Html.ActionLink("جزئیات", "Details", new { id = item.Id }) <span> |</span>
+                </td>
 
             </tr>
                     }

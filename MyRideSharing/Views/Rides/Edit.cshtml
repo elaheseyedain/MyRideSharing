@@ -10,7 +10,9 @@
     <hr>
 </div>
 
-@ViewBag.Error
+<hr />
+<b style="color:red;">@ViewBag.Error</b>
+<hr />
 @ViewBag.Message
 @using (Html.BeginForm("Edit", "Rides", FormMethod.Post, new { @class = "form-horizontal text-center" }))
 {
