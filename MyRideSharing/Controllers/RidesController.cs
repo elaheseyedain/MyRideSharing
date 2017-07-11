@@ -491,7 +491,7 @@ namespace MyRideSharing.Controllers
             {
                 return HttpNotFound();
             }
-
+            //
             var alreadyReserved = db.Seats.Any(p => (p.UserId == u.Id) && (p.RideId == ride.Id));
             if (alreadyReserved)
             {
