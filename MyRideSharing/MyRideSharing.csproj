@@ -339,6 +339,7 @@
     <Content Include="Views\Rides\PassengersList.cshtml" />
     <Content Include="Views\CarOwners\CarOwnerRides.cshtml" />
     <Content Include="Views\CarOwners\RateDriver.cshtml" />
+    <Content Include="Views\Rides\GeoReserve.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

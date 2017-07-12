@@ -1,8 +1,63 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "درباره ما";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
 
-<p>Use this area to provide additional information.</p>
+<div class="info text-center">
+    <div><h2 style="color:mediumpurple;">@ViewBag.Title</h2></div>
+    
+</div>
+
+
+<div class="text-center">
+
+    <h4 style="color:green;">@ViewBag.Message</h4>
+    <h5>دیگر نگران بی ماشینی نباشید.</h5>
+    <h5 style="color:black;">شماره تماس: 09127412421</h5>
+    <h5 style="color:black;">آدرس: انصاریه - بوستان ششم - پلاک 485؟</h5>
+    <hr/>
+
+    <div class="center-block" id="googleMap" style="width:600px;height:480px;"></div>
+</div>
+
+<script>
+    function myMap() {
+        var ansarie = { lat: 36.670163, lng: 48.508984 };
+        var map = new google.maps.Map(document.getElementById('googleMap'), {
+            zoom: 16,
+            center: ansarie
+        });
+        var marker = new google.maps.Marker({
+            position: ansarie,
+            map: map,
+            title: 'انصاریه',
+            
+        });
+        var infowindow = new google.maps.InfoWindow({ content: "شرکت الی و برادران بجز محسن" });
+        infowindow.open(map, marker);
+    }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNSYdNVx56jQIX2bJ04104PSoKoU_OaOA&callback=myMap"></script>
+
+<!------------Comments-->
+@*<script src = "https://maps.googleapis.com/maps/api/js?key=AIzaSyDif2HgPVnD5poP4lAmSK9MPTXEPvYesc4">
+
+
+    function loadScript() {
+
+        var script = document.createElement("script");
+
+        //script.src = "http://maps.googleapis.com/maps/api/js? key=AIzaSyDif2HgPVnD5poP4lAmSK9MPTXEPvYesc4&sensor=true&callback=initialize";
+        script.src = "http://maps.googleapis.com/maps/api/js?key=AIzaSyDif2HgPVnD5poP4lAmSK9MPTXEPvYesc4&callback=initialize";
+        var mapProp = {center:new google.maps.LatLng(51.508742,-0.120850),zoom:7,mapTypeId: google.maps.MapTypeId.ROADMAP};
+        document.body.appendChild(script);
+        var mapProp = { center: new google.maps.LatLng(51.508742, -0.120850), zoom: 7, mapTypeId: google.maps.MapTypeId.ROADMAP };
+        var map = new google.maps.Map(document.getElementById("googleMap"), mapProp);
+        google.maps.event.addDomListener(window, 'load', initialize);//initializing map
+        var infowindow = new google.maps.InfoWindow({ content: "Hello World!" }); infowindow.open(map, marker);
+    }
+
+    window.onload = loadScript
+</script>*@

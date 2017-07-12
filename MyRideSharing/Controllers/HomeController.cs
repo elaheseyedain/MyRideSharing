@@ -15,7 +15,7 @@ namespace MyRideSharing.Controllers
 
         public ActionResult About()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "با ما در زمان و هزینه های خودتان صرفه جویی کنید.";
 
             return View();
         }
