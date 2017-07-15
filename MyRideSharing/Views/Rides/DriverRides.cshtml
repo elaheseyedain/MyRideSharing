@@ -37,7 +37,7 @@
                     @Html.DisplayNameFor(model => model.Price)
                 </th>
                 <th class="text-right">
-                    @Html.DisplayNameFor(model => model.EmptySeats)
+                    @Html.DisplayNameFor(model => model.EmptySeats) 
                 </th>
                 <th></th>
             </tr>
@@ -131,6 +131,9 @@
 
                 </td>
             </tr>
+            <br/>
+            <a href=@Url.Action("Delete", "CarOwners", new { id = item.CarOwnerId })> حذف ماشین </a>
+            <a href=@Url.Action("Edit", "CarOwners", new { id = item.CarOwnerId })> ویرایش ماشین </a>
                     }
 
     </table>
@@ -139,6 +142,7 @@
 <p>
     @Html.ActionLink("ثبت سفر", "Create")
 </p>
+
 
 <p>
     @Html.ActionLink("لیست سفرها به عنوان راننده در آینده", "DriverFutureRides")

@@ -49,9 +49,8 @@ namespace MyRideSharing.Controllers
         public ActionResult Create()
         {
 
-            User u = new User();
-            var uid = Int32.Parse(Session["userId"].ToString());
-            var ownsCar = db.CarOwners.Any(p => (p.UserId == uid));
+            User u = db.Users.Find(SessionPersister.UserId);
+            var ownsCar = db.CarOwners.Any(p => (p.UserId == u.Id));
             if (!ownsCar)
             {
                 ViewBag.UserId = new SelectList(db.Users, "Id", "StudentId");

@@ -57,7 +57,7 @@ namespace MyRideSharing.Controllers
             SessionPersister.NationalId = user.NationalId;
             SessionPersister.StudentId = user.StudentId;
             SessionPersister.Email = user.Email;
-            SessionPersister.FirstName = user.LastName;
+            SessionPersister.LastName = user.LastName;
             SessionPersister.FirstName = user.FirstName;
             
             return RedirectToAction("Index", "Home");
