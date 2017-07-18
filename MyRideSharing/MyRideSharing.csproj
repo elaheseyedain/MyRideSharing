@@ -340,9 +340,12 @@
     <Content Include="Views\CarOwners\CarOwnerRides.cshtml" />
     <Content Include="Views\CarOwners\RateDriver.cshtml" />
     <Content Include="Views\Rides\GeoReserve.cshtml" />
+    <Content Include="Views\Home\text.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Account\App_LocalResources\" />
+    <Folder Include="Views\Home\App_LocalResources\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

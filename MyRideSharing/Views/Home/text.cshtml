@@ -153,24 +153,3 @@
         </a>
     </p>
 </div>
-<!-----------JavaScript-->
-
-<script>
-    function myMap() {
-        var ansarie = { lat: 36.670163, lng: 48.508984 };
-        var map = new google.maps.Map(document.getElementById('googleMap'), {
-            zoom: 16,
-            center: ansarie
-        });
-        var marker = new google.maps.Marker({
-            position: ansarie,
-            map: map,
-            title: 'انصاریه',
-            
-        });
-        var infowindow = new google.maps.InfoWindow({ content: "آدرس :زنجان - انصاریه- بوستان ششم طبقه سوم کدپستی: 3519817978" });
-        infowindow.open(map, marker);
-    }
-</script>
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNSYdNVx56jQIX2bJ04104PSoKoU_OaOA&callback=myMap"></script>

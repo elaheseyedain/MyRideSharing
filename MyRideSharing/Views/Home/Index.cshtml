@@ -18,12 +18,12 @@
 @Html.Partial("~/Views/Shared/GoUniSearch.cshtml")
 
 
-<hr />
+
 @using (Html.BeginForm("ReturnFromUni", "Rides", FormMethod.Post, new { @class = "form-vertical text-right" }))
 {
     @Html.AntiForgeryToken()
     <div class="row">
-        <h4>میخوام برگردم از دانشگاه</h4>
+        <h4>میخوام از دانشگاه برگردم</h4>
         <div class="col-lg-4"></div>
 
 
@@ -79,25 +79,27 @@
 
         <div class="row placeholders center-block">
             <div class="col-xs-6 col-sm-4 placeholder">
-                <h4>ثبت نام</h4>
+                <h4>سفری ایمن و ارزان</h4>
                 <br />
                 <img src="~/Content/barber.png" width="200" height="200" class="img-responsive" alt="Barber">
-                <br />
-                @Html.ActionLink("ثبت نام", "SignUp", "Account", new { jobtype = "ثبت نام" }, htmlAttributes: new { @class = "btn btn-default-custom" })
+                <br /><br /><br />
+                @Html.ActionLink("ادامه مطالب", "About", "Home", new { jobtype = "ثبت نام" }, htmlAttributes: new { @class = "btn btn-default-custom" })
             </div>
             <div class="col-xs-6 col-sm-4 placeholder">
-                <h4>ثبت نام</h4>
+                <h4>چگونه کار می‌کند؟</h4>
                 <br />
-                <img src="~/Content/barber.png" width="200" height="200" class="img-responsive" alt="Barber">
-                <br />
-                @Html.ActionLink("ثبت نام", "SignUp", "Account", new { jobtype = "ثبت نام" }, htmlAttributes: new { @class = "btn btn-default-custom" })
+                <img src="~/Content/travel.jpg" width="200" height="200" class="img-responsive" alt="Barber">
+                <br /><br /><br />
+                @Html.ActionLink("ادامه مطالب", "About", "Home", new { jobtype = "ثبت نام" }, htmlAttributes: new { @class = "btn btn-default-custom" })
             </div>
             <div class="col-xs-6 col-sm-4 placeholder">
-                <h4>ثبت نام</h4>
+                <h4>نمونه های مشابه</h4>
                 <br />
-                <img src="~/Content/barber.png" width="200" height="200" class="img-responsive" alt="Barber">
-                <br />
-                @Html.ActionLink("ثبت نام", "SignUp", "Account", new { jobtype = "ثبت نام" }, htmlAttributes: new { @class = "btn btn-default-custom" })
+                <img src="~/Content/essnap.jpg" width="200" height="200" class="img-responsive" alt="Barber">
+                <br /><br /><br />
+                <a style="border-radius: 5px; color: #fff; background-color: #01aa10; padding: 7px 28px; display: inline-block;" href="https://snapp.ir/">
+                    مشاهده
+                </a>
             </div>
         </div>
 
