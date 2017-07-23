@@ -537,7 +537,6 @@ namespace MyRideSharing.Controllers
             User u = db.Users.Find(SessionPersister.UserId);
             s.RideId = r.Id;
             s.UserId = u.Id;
-            r.EmptySeats -= 1;
 
             var alreadyReserved = db.Seats.Any(p => (p.UserId == u.Id) && (p.RideId == r.Id));
             if (alreadyReserved)
@@ -562,6 +561,8 @@ namespace MyRideSharing.Controllers
                 ViewBag.Error = "ظرفیت خودرو به پایان رسیده است. ";
                 return View(r);
             }
+
+            r.EmptySeats -= 1;
             if (ModelState.IsValid)
             {
 
