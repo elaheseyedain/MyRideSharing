@@ -203,12 +203,12 @@ h1 {
 }
 
 .jumbotron {
-    background: url("../Content/img/myindex.jpg") no-repeat center bottom fixed;
+    background: url("../Content/img/4.jpg") no-repeat;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    height: 400px;
+    height: 450px;
     font-family: 'IRANSansMedium', 'Web Yekan', Tahoma, sans-serif !important;
     color: #fefefe;
     z-index: 997;

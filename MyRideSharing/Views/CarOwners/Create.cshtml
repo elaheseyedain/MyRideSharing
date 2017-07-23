@@ -39,12 +39,14 @@
     @Html.LabelFor(model => model.CarColor)
     <br />
     @Html.EditorFor(model => model.CarColor)
+
+    <br/>
     @Html.ValidationMessageFor(model => model.CarColor)
     <br />
 
     @Html.LabelFor(model => model.CarProdYear)
     <br />
-    @Html.EditorFor(model => model.CarProdYear, new { maxlength = "2", onkeyup = "this.value = this.value.replace(/[^0-9]/, '')" })
+    @Html.TextBoxFor(model => model.CarProdYear, new { maxlength = "2", onkeyup = "this.value = this.value.replace(/[^0-9]/, '')" })
 
     
     <br />
@@ -52,7 +54,7 @@
     <br />
     @Html.LabelFor(model => model.LicenseNumber)
     <br />
-    @Html.EditorFor(model => model.LicenseNumber, new { maxlength = "10", onkeyup = "this.value = this.value.replace(/[^0-9]/, '')" })
+    @Html.TextBoxFor(model => model.LicenseNumber, new { maxlength = "10", onkeyup = "this.value = this.value.replace(/[^0-9]/, '')" })
     <br />
     @Html.ValidationMessageFor(model => model.LicenseNumber)
     <br />

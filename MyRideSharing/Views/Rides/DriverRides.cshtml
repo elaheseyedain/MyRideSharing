@@ -131,9 +131,7 @@
 
                 </td>
             </tr>
-            <br/>
-            <a href=@Url.Action("Delete", "CarOwners", new { id = item.CarOwnerId })> حذف ماشین </a>
-            <a href=@Url.Action("Edit", "CarOwners", new { id = item.CarOwnerId })> ویرایش ماشین </a>
+            
                     }
 
     </table>
@@ -152,3 +150,6 @@
 </p>
 
 
+<a href=@Url.Action("Delete", "CarOwners", new { id = ViewBag.CarOwnerId })> حذف ماشین </a>
+<br/>
+<a href=@Url.Action("Edit", "CarOwners", new { id = ViewBag.CarOwnerId })> ویرایش ماشین </a>

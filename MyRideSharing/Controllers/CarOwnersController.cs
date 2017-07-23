@@ -18,6 +18,7 @@ namespace MyRideSharing.Controllers
         // GET: CarOwners
         public ActionResult Index()
         {
+            
             var carOwners = db.CarOwners.Include(c => c.User);
             return View(carOwners.ToList());
         }
@@ -25,6 +26,7 @@ namespace MyRideSharing.Controllers
         // GET: CarOwners/Details/5
         public ActionResult Details(int? id)
         {
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -50,6 +52,10 @@ namespace MyRideSharing.Controllers
         {
 
             User u = db.Users.Find(SessionPersister.UserId);
+            if (u == null)
+            {
+                return RedirectToAction("SignIn", "Account");
+            }
             var ownsCar = db.CarOwners.Any(p => (p.UserId == u.Id));
             if (!ownsCar)
             {

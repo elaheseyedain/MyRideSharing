@@ -1,17 +1,73 @@
 ﻿@{
-    ViewBag.Title = "Contact";
+    ViewBag.Title = "ارتباط با ما";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
 
-<address>
-    One Microsoft Way<br />
-    Redmond, WA 98052-6399<br />
-    <abbr title="Phone">P:</abbr>
-    425.555.0100
-</address>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+<div class="info text-center">
+    <div><h2 style="color:mediumpurple;">@ViewBag.Title</h2></div>
+
+</div>
+<div class="rtl">
+
+
+
+    <div class="title" id="complaints" style="padding-top: 60px">
+        <h1>انتقادات و پیشنهادات</h1>
+    </div>
+    <div class="content">
+        <p>
+            درصورت داشتن هرگونه انتقاد یا پیشنهاد،درخواست یا شکایتی نسبت به سایت و خدمات آن، می توانید از طریق تلفن تماس واحد پشتیبانی با ما در ارتباط باشید و یا اینکه حضوری به آدرس شرکت که در ذیل قید خواهد شد مراجعه فرمایید.
+        </p>
+        <h2>تلفن تماس با واحد پشتیبانی:</h2>
+        <p>02333437578 </p>
+
+
+    </div>
+</div>
+
+<div class="text-center">
+
+    <h5 style="color:green;">@ViewBag.Message</h5>
+    <hr />
+
+    <div class="center-block" id="googleMap" style="width:600px;height:480px;"></div>
+</div>
+
+<div class="title text-center" id="contact" style="padding-top: 60px">
+    <h1>تماس با ما</h1>
+</div>
+<div class="content text-center">
+    <h2>آدرس:</h2>
+    <p>زنجان  – جاده تبریز – دانشگاه زنجان کدپستی: 3519817978</p>
+    <p>شماره های تماس با مدیریت: 09121234567-09901234567</p>
+    <p>تلفن تماس با واحد پشتیبانی:</p>
+    <h2>تلفن تماس با واحد پشتیبانی:</h2>
+    <p>02433441286 و تلگرام</p>
+    <p>
+        <a style="border-radius: 24px; color: #fff; background-color: #249BCE; padding: 10px 20px; display: inline-block;" href="https://t.me/znusoft">
+            Ride sharing Help Telegram
+        </a>
+    </p>
+</div>
+<!-----------JavaScript-->
+
+<script>
+    function myMap() {
+        var ansarie = { lat: 36.670163, lng: 48.508984 };
+        var map = new google.maps.Map(document.getElementById('googleMap'), {
+            zoom: 16,
+            center: ansarie
+        });
+        var marker = new google.maps.Marker({
+            position: ansarie,
+            map: map,
+            title: 'انصاریه',
+
+        });
+        var infowindow = new google.maps.InfoWindow({ content: "آدرس :زنجان - انصاریه- بوستان ششم طبقه سوم کدپستی: 3519817978" });
+        infowindow.open(map, marker);
+    }
+</script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNSYdNVx56jQIX2bJ04104PSoKoU_OaOA&callback=myMap"></script>

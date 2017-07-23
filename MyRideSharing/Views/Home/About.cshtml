@@ -1,5 +1,5 @@
 ﻿@{
-  
+    ViewBag.Title = "درباره ما";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -97,8 +97,7 @@
             برای باز کردن حساب کاربری، عضویت در سامانه و استفاده از آن ،افراد باید اطلاعات لازم مانند نام و نام خانوادگی، رمز عبور و آدرس ایمیل، شماره تلفن خود را وارد و تایید کنند. این اطلاعات ثبت شده به هیچ عنوان در اختیار اشخاص یا موسسات خارج از شرکت قرار نخواهد گرفت و محرمانه تلقی می شود.
         </p>
         <ul>
-            <li>
-            </li>
+            
             <li> از شماره تلفن و ایمیل وارد شده هنگام ثبت‌ نام برای ارسال اطلاعات، هزینه و اخبار در مورد سفر با کاربران استفاده می‌شود.</li>
             <li>تنها اشخاص حقیقی حق عضویت در سامانه را دارند.</li>
             <li>صرف عضویت در این سامانه دلیل بر قبول و پذیرش مفاد موافقتنامه بوده و خلاف آن به به هیچ وجه پذیرفته نیست.</li>
@@ -108,39 +107,15 @@
             <li>عضویت در سایت رایگان است و کاربر صرفا بر اساس هزینه تایین شده سفر خود، پرداخت خواهد کرد.</li>
 </ul>
     </div>
-    <div class="title" id="complaints" style="padding-top: 60px">
-        <h1>انتقادات و پیشنهادات</h1>
-    </div>
-    <div class="content">
-        <p>
-            درصورت داشتن هرگونه انتقاد یا پیشنهاد،درخواست یا شکایتی نسبت به سایت و خدمات آن، می توانید از طریق تلفن تماس واحد پشتیبانی با ما در ارتباط باشید و یا اینکه حضوری به آدرس شرکت که در ذیل قید خواهد شد مراجعه فرمایید.
-        </p>
-        <p>
-            آدرس :زنجان - انصاریه- بوستان ششم طبقه سوم کدپستی: 3519817978
-        </p>
-        <h2>تلفن تماس با واحد پشتیبانی:</h2>
-        <p>02333437578 و تلگرام</p>
-        <p>
-            <a style="border-radius: 24px; color: #fff; background-color: #249BCE; padding: 10px 20px; display: inline-block;" href="https://t.me/znusoft">
-                Ride sharing Help Telegram
-            </a>
-        </p>
 
-    </div>
 </div>
 
-<div class="text-center">
 
-    <h4 style="color:green;">@ViewBag.Message</h4>
-    <hr/>
 
-    <div class="center-block" id="googleMap" style="width:600px;height:480px;"></div>
-</div>
-
-<div class="title" id="contact" style="padding-top: 60px">
+<div class="title text-center" id="contact" style="padding-top: 60px">
     <h1>تماس با ما</h1>
 </div>
-<div class="content">
+<div class="content text-center">
     <h2>آدرس:</h2>
     <p>زنجان  – جاده تبریز – دانشگاه زنجان کدپستی: 3519817978</p>
     <p>شماره های تماس با مدیریت: 09121234567-09901234567</p>
@@ -153,24 +128,3 @@
         </a>
     </p>
 </div>
-<!-----------JavaScript-->
-
-<script>
-    function myMap() {
-        var ansarie = { lat: 36.670163, lng: 48.508984 };
-        var map = new google.maps.Map(document.getElementById('googleMap'), {
-            zoom: 16,
-            center: ansarie
-        });
-        var marker = new google.maps.Marker({
-            position: ansarie,
-            map: map,
-            title: 'انصاریه',
-            
-        });
-        var infowindow = new google.maps.InfoWindow({ content: "آدرس :زنجان - انصاریه- بوستان ششم طبقه سوم کدپستی: 3519817978" });
-        infowindow.open(map, marker);
-    }
-</script>
-
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDNSYdNVx56jQIX2bJ04104PSoKoU_OaOA&callback=myMap"></script>

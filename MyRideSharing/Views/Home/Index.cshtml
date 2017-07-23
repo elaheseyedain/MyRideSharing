@@ -8,7 +8,7 @@
 }
 
 <div class="row">
-    <div class="jumbotron text-center">
+    <div class="jumbotron text-left">
         <h1>Ride Sharing</h1>
         <p>صرفه جویی در هزینه و زمان</p>
         
@@ -16,7 +16,6 @@
 </div>
 
 @Html.Partial("~/Views/Shared/GoUniSearch.cshtml")
-
 
 
 @using (Html.BeginForm("ReturnFromUni", "Rides", FormMethod.Post, new { @class = "form-vertical text-right" }))
@@ -74,32 +73,38 @@
 }
 <br/>
 
+
+
 <hr />
 
 
         <div class="row placeholders center-block">
             <div class="col-xs-6 col-sm-4 placeholder">
-                <h4>سفری ایمن و ارزان</h4>
+                <h4>با ما در ارتباط باشید</h4>
                 <br />
                 <img src="~/Content/barber.png" width="200" height="200" class="img-responsive" alt="Barber">
                 <br /><br /><br />
-                @Html.ActionLink("ادامه مطالب", "About", "Home", new { jobtype = "ثبت نام" }, htmlAttributes: new { @class = "btn btn-default-custom" })
+                <a class="btn btn-default-custom" href="~/Home/Contact">تماس با ما</a>
+                @*@Html.ActionLink("ادامه مطالب", "About", "Home", htmlAttributes: new { @class = "btn btn-default-custom" })*@
             </div>
             <div class="col-xs-6 col-sm-4 placeholder">
                 <h4>چگونه کار می‌کند؟</h4>
                 <br />
                 <img src="~/Content/travel.jpg" width="200" height="200" class="img-responsive" alt="Barber">
                 <br /><br /><br />
-                @Html.ActionLink("ادامه مطالب", "About", "Home", new { jobtype = "ثبت نام" }, htmlAttributes: new { @class = "btn btn-default-custom" })
+                <a class="btn btn-default-custom" href="~/Home/Terms">ادامه مطالب</a>
+                @*@Html.ActionLink("ادامه مطالب", "text", "Home", htmlAttributes: new { @class = "btn btn-default-custom" })*@
             </div>
             <div class="col-xs-6 col-sm-4 placeholder">
                 <h4>نمونه های مشابه</h4>
                 <br />
                 <img src="~/Content/essnap.jpg" width="200" height="200" class="img-responsive" alt="Barber">
                 <br /><br /><br />
-                <a style="border-radius: 5px; color: #fff; background-color: #01aa10; padding: 7px 28px; display: inline-block;" href="https://snapp.ir/">
+                <a class="btn btn-default-custom" href="https://snapp.ir/">اسنپ</a>
+
+                @*<a style="border-radius: 5px; color: #fff; background-color: #01aa10; padding: 7px 28px; display: inline-block;" href="https://snapp.ir/">
                     مشاهده
-                </a>
+                </a>*@
             </div>
         </div>
 

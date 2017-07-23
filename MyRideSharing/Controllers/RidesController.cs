@@ -98,6 +98,7 @@ namespace MyRideSharing.Controllers
                 return RedirectToAction("Index", "Home");
             }
             var mr = db.Rides.Where(a => a.CarOwnerId == co.Id).OrderByDescending(p => p.StartTime).ToList();
+            ViewBag.CarOwnerId = co.Id;
             return View(mr.ToList());
 
 
@@ -119,6 +120,7 @@ namespace MyRideSharing.Controllers
                 return RedirectToAction("Index", "Home");
             }
             var mr = db.Rides.Where(a => (a.CarOwnerId == co.Id) && (a.StartTime >= DateTime.Now)).OrderBy(p => p.StartTime).ToList();
+            ViewBag.CarOwnerId = co.Id;
             return View(mr.ToList());
 
 
@@ -140,6 +142,7 @@ namespace MyRideSharing.Controllers
                 return RedirectToAction("Index", "Home");
             }
             var mr = db.Rides.Where(a => (a.CarOwnerId == co.Id) && (a.StartTime <= DateTime.Now)).OrderByDescending(p => p.StartTime).ToList();
+            ViewBag.CarOwnerId = co.Id;
             return View(mr.ToList());
 
 

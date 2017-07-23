@@ -20,9 +20,16 @@ namespace MyRideSharing.Controllers
             return View();
         }
 
+        public ActionResult Terms()
+        {
+            ViewBag.Message = "صرفه جویی در هزینه ها با ما";
+
+            return View();
+        }
+
         public ActionResult Contact()
         {
-            ViewBag.Message = "Your contact page.";
+            ViewBag.Message = "ارتباط با ما";
 
             return View();
         }
